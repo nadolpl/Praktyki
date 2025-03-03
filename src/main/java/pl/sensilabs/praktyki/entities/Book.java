@@ -1,10 +1,8 @@
 package pl.sensilabs.praktyki.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.Set;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,4 +23,7 @@ public class Book {
   private String bookTitle;
   private Integer pages;
   private Integer categoryId;
+
+  @OneToMany(mappedBy = "book")
+  private Set<BookAuthor> bookAuthors;
 }
