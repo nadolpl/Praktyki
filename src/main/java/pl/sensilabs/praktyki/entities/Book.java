@@ -31,13 +31,12 @@ public class Book {
   private UUID bookId;
   private String bookTitle;
   private Integer pages;
-  private Integer categoryId;
 
   @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "category_id")
   private BookCategory category;
 
-  @OneToMany(mappedBy = "publishedBook")
+  @OneToMany(mappedBy = "book")
   private Set<PublishedBook> publishedBooks;
 
   @ManyToMany(cascade = CascadeType.PERSIST)
