@@ -35,7 +35,7 @@ public class AuthorController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("{authorId}")
+    @PostMapping
     public ResponseEntity<AuthorResponse> create(@RequestBody AuthorRequest authorRequest) {
         AuthorResponse author = authorService.create(authorRequest);
         return ResponseEntity.created(URI.create("/api/author/" + author.authorId())).body(author);

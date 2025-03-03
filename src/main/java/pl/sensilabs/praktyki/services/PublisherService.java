@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.sensilabs.praktyki.mappers.PublisherMapper;
 import pl.sensilabs.praktyki.repositories.PublisherRepository;
+import pl.sensilabs.praktyki.requests.PublisherRequest;
 import pl.sensilabs.praktyki.responses.PublisherResponse;
 import jakarta.persistence.EntityNotFoundException;
 
@@ -12,7 +13,6 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-
 public class PublisherService {
 
     private final PublisherRepository publisherRepository;
@@ -36,5 +36,9 @@ public class PublisherService {
         } else {
             throw new EntityNotFoundException();
         }
+    }
+
+    public PublisherResponse create(PublisherRequest request) {
+        return PublisherMapper.toResponse(publisherRepository.save(PublisherMapper.toEntity(request)));
     }
 }
