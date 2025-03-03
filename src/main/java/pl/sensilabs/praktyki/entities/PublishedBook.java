@@ -26,9 +26,7 @@ public class PublishedBook {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID publishedBookId;
-  private UUID bookId;
-  private UUID publisherId;
-  private Integer bookTypeId;
+
   private Integer releaseNumber;
   private Instant publishDate;
 
