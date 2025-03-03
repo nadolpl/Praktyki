@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import java.util.List;
+
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,4 +23,10 @@ public class BookCategory {
 
     @Column(name="category_id")
     private int categoryId;
+
+    @OneToMany
+    @JoinColumn(name="category_id")
+    private List<Book> BookCategoryBooks;
+
+
 }

@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
@@ -21,5 +23,10 @@ public class BookType {
 
     @Column(name="book_type_name")
     private String BookTypeName;
+
+    @OneToMany
+    @JoinColumn(name="book_type_id")
+    private List<Book> BookTypePublishedBooks;
+
 
 }
