@@ -29,4 +29,8 @@ public class BookTypeService {
         bookTypeRepository.deleteById(id);
     }
 
+    public BookType addType(BookType bookType){
+      return   bookTypeRepository.save(bookType);
+    }
+
 }
