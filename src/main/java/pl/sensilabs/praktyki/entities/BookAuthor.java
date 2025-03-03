@@ -15,14 +15,10 @@ import java.util.UUID;
 public class BookAuthor {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID bookAuthorId;
-
-    @ManyToOne
-    @JoinColumn(name = "author_id", nullable = false)
-    private Author author;
-
-    @ManyToOne
-    @JoinColumn(name = "book_id", nullable = false)
-    private Book book;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer bookAuthorId;
+    @Column(name = "author_id", nullable = false)
+    private UUID authorId;
+    @Column(name = "book_id", nullable = false)
+    private UUID bookId;
 }

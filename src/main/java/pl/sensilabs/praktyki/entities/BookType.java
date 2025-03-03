@@ -21,12 +21,8 @@ public class BookType {
     @Column(name="book_type_id")
     private Integer bookTypeId;
 
-    @Column(name="book_type_name")
     private String bookTypeName;
 
-    @OneToMany
-    @JoinColumn(name="book_type_id")
-    private List<Book> bookTypePublishedBooks;
-
-
+    @OneToMany(mappedBy = "bookType")
+    private List<PublishedBook> publishedBooks;
 }

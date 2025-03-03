@@ -7,9 +7,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.UUID;
+import lombok.Setter;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "publisher")
@@ -19,7 +21,6 @@ public class Publisher {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID publisherId;
 
-    @Column(nullable = false)
     private String publisherName;
 
     @OneToMany(mappedBy = "publisher")

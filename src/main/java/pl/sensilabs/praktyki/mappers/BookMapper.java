@@ -15,7 +15,7 @@ public interface BookMapper {
         .bookId(book.getBookId())
         .bookTitle(book.getBookTitle())
         .bookPages(book.getPages())
-        .bookCategory(book.getCategory().getCategoryName())
+        .bookCategory(book.getBookCategory().getCategoryName())
         .authors(book.getAuthors().stream()
             .map(a -> a.getFirstName() + a.getLastName())
             .collect(Collectors.toSet()))

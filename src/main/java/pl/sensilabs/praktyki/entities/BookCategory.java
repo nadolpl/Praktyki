@@ -24,9 +24,8 @@ public class BookCategory {
     @Column(name="category_name")
     private String categoryName;
 
-    @OneToMany
-    @JoinColumn(name="category_id")
-    private List<Book> cookCategoryBooks;
+    @OneToMany(mappedBy = "bookCategory")
+    private List<Book> books;
 
 
 }

@@ -2,6 +2,7 @@ package pl.sensilabs.praktyki.mappers;
 
 import java.util.stream.Collectors;
 import pl.sensilabs.praktyki.entities.PublishedBook;
+import pl.sensilabs.praktyki.requests.PublishedBookRequest;
 import pl.sensilabs.praktyki.responses.PublishedBookResponse;
 
 public interface PublishedBookMapper {
@@ -12,6 +13,7 @@ public interface PublishedBookMapper {
     }
 
     return PublishedBookResponse.builder()
+        .publishedBookId(publishedBook.getPublishedBookId())
         .bookTitle(publishedBook.getBook().getBookTitle())
         .authors(publishedBook.getBook().getAuthors().stream()
             .map(a -> a.getFirstName() + a.getLastName())
@@ -21,5 +23,15 @@ public interface PublishedBookMapper {
         .releaseNumber(publishedBook.getReleaseNumber())
         .publishDate(publishedBook.getPublishDate())
         .build();
+  }
+
+  static PublishedBook toEntity(PublishedBookRequest publishedBookRequest) {
+    var entity = new PublishedBook();
+    entity.setBookId(publishedBookRequest.getBookId());
+    entity.setPublisherId(publishedBookRequest.getPublisherId());
+    entity.setBookTypeId(publishedBookRequest.getBookTypeId());
+    entity.setReleaseNumber(publishedBookRequest.getReleaseNumber());
+    entity.setPublishDate(publishedBookRequest.getPublishDate());
+    return entity;
   }
 }

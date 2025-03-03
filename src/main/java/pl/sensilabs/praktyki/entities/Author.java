@@ -7,9 +7,11 @@ import lombok.NoArgsConstructor;
 
 import java.util.Set;
 import java.util.UUID;
+import lombok.Setter;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "author")
@@ -18,16 +20,13 @@ public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID authorId;
-
-    @Column(nullable = false)
     private String firstName;
-
-    @Column(nullable = false)
     private String lastName;
-
-    @Column(nullable = false)
     private String email;
 
-    @OneToMany(mappedBy = "author")
-    private Set<BookAuthor> bookAuthors;
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @JoinTable(name = "book_author",
+        joinColumns = @JoinColumn(name = "author_id"),
+        inverseJoinColumns = @JoinColumn(name = "book_id"))
+    private Set<Book> books;
 }
