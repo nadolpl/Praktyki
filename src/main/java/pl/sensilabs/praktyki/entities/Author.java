@@ -16,13 +16,13 @@ public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID author_id;
+    private UUID authorId;
 
     @Column(nullable = false)
-    private String first_name;
+    private String firstName;
 
     @Column(nullable = false)
-    private String last_name;
+    private String lastName;
 
     @Column(nullable = false)
     private String email;

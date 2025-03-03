@@ -16,11 +16,11 @@ public class BookAuthor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID book_author_id;
+    private UUID bookAuthorId;
 
     @Column(nullable = false)
-    private UUID author_id;
+    private UUID authorId;
 
     @Column(nullable = false)
-    private UUID book_id;
+    private UUID bookId;
 }

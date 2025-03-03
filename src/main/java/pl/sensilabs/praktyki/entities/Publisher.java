@@ -16,8 +16,8 @@ public class Publisher {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID publisher_id;
+    private UUID publisherId;
 
     @Column(nullable = false)
-    private String publisher_name;
+    private String publisherName;
 }
