@@ -28,4 +28,5 @@ public class PublishedBook {
   private Integer bookTypeId;
   private Integer releaseNumber;
   private Instant publishDate;
+
 }
