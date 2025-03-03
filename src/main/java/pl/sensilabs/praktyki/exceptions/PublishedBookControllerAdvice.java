@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class PublishedBookControllerAdvice {
+
   @ExceptionHandler(PublishedBookNotFoundException.class)
   @ResponseStatus(HttpStatus.NOT_FOUND)
   public ResponseEntity<String> publishedBookNotFoundHandler(PublishedBookNotFoundException ex) {
