@@ -18,9 +18,11 @@ public class BookAuthor {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID bookAuthorId;
 
-    @Column(nullable = false)
-    private UUID authorId;
+    @ManyToOne
+    @JoinColumn(name = "author_id", nullable = false)
+    private Author author;
 
-    @Column(nullable = false)
-    private UUID bookId;
+    @ManyToOne
+    @JoinColumn(name = "book_id", nullable = false)
+    private Book book;
 }
