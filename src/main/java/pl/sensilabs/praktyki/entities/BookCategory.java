@@ -26,7 +26,7 @@ public class BookCategory {
 
     @OneToMany
     @JoinColumn(name="category_id")
-    private List<Book> BookCategoryBooks;
+    private List<Book> cookCategoryBooks;
 
 
 }
