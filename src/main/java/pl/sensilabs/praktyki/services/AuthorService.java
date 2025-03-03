@@ -3,8 +3,10 @@ package pl.sensilabs.praktyki.services;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.sensilabs.praktyki.entities.Author;
 import pl.sensilabs.praktyki.mappers.AuthorMapper;
 import pl.sensilabs.praktyki.repositories.AuthorRepository;
+import pl.sensilabs.praktyki.requests.AuthorRequest;
 import pl.sensilabs.praktyki.responses.AuthorResponse;
 
 import java.util.UUID;
@@ -35,5 +37,9 @@ public class AuthorService {
         } else {
             throw new EntityNotFoundException();
         }
+    }
+
+    public AuthorResponse create(AuthorRequest request) {
+        return AuthorMapper.toResponse(authorRepository.save(AuthorMapper.toEntity(request)));
     }
 }

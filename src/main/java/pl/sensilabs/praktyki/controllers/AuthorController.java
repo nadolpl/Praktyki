@@ -3,9 +3,11 @@ package pl.sensilabs.praktyki.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.sensilabs.praktyki.requests.AuthorRequest;
 import pl.sensilabs.praktyki.responses.AuthorResponse;
 import pl.sensilabs.praktyki.services.AuthorService;
 
+import java.net.URI;
 import java.util.UUID;
 
 @RestController
@@ -31,6 +33,12 @@ public class AuthorController {
     public ResponseEntity<Void> deleteById(@PathVariable UUID authorId) {
         authorService.deleteById(authorId);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("{authorId}")
+    public ResponseEntity<AuthorResponse> create(@RequestBody AuthorRequest authorRequest) {
+        AuthorResponse author = authorService.create(authorRequest);
+        return ResponseEntity.created(URI.create("/api/author/" + author.authorId())).body(author);
     }
 }
 
