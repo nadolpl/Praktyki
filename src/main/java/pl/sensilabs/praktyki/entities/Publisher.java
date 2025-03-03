@@ -1,6 +1,7 @@
 package pl.sensilabs.praktyki.entities;
 
 import jakarta.persistence.*;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,4 +21,7 @@ public class Publisher {
 
     @Column(nullable = false)
     private String publisherName;
+
+    @OneToMany(mappedBy = "publisher")
+    List<PublishedBook> publishedBooks;
 }
