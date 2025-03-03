@@ -19,14 +19,14 @@ public class BookType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="book_type_id")
-    private int BookTypeId;
+    private int bookTypeId;
 
     @Column(name="book_type_name")
-    private String BookTypeName;
+    private String bookTypeName;
 
     @OneToMany
     @JoinColumn(name="book_type_id")
-    private List<Book> BookTypePublishedBooks;
+    private List<Book> bookTypePublishedBooks;
 
 
 }
