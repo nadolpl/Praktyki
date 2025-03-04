@@ -2,6 +2,7 @@ package pl.sensilabs.praktyki.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.sensilabs.praktyki.exceptions.PublisherNotFoundException;
 import pl.sensilabs.praktyki.mappers.PublisherMapper;
 import pl.sensilabs.praktyki.repositories.PublisherRepository;
 import pl.sensilabs.praktyki.requests.PublisherRequest;
@@ -27,14 +28,14 @@ public class PublisherService {
     public PublisherResponse findById(UUID publisherId) {
         return publisherRepository.findById(publisherId)
                 .map(PublisherMapper::toResponse)
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(() -> new PublisherNotFoundException(publisherId));
     }
 
     public void deleteById(UUID publisherId) {
         if (publisherRepository.existsById(publisherId)) {
             publisherRepository.deleteById(publisherId);
         } else {
-            throw new EntityNotFoundException();
+            throw new PublisherNotFoundException(publisherId);
         }
     }
 

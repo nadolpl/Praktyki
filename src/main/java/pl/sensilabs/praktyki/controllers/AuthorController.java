@@ -1,5 +1,6 @@
 package pl.sensilabs.praktyki.controllers;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +37,7 @@ public class AuthorController {
     }
 
     @PostMapping
-    public ResponseEntity<AuthorResponse> create(@RequestBody AuthorRequest authorRequest) {
+    public ResponseEntity<AuthorResponse> create(@RequestBody @Valid AuthorRequest authorRequest) {
         AuthorResponse author = authorService.create(authorRequest);
         return ResponseEntity.created(URI.create("/api/author/" + author.authorId())).body(author);
     }

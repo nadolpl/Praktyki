@@ -1,5 +1,6 @@
 package pl.sensilabs.praktyki.controllers;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +37,7 @@ public class PublisherController {
     }
 
     @PostMapping
-    public ResponseEntity<PublisherResponse> create(@RequestBody PublisherRequest request) {
+    public ResponseEntity<PublisherResponse> create(@RequestBody @Valid PublisherRequest request) {
         PublisherResponse publisher = publisherService.create(request);
         return ResponseEntity.created(URI.create("/api/publisher/" + publisher.publisherId())).body(publisher);
     }

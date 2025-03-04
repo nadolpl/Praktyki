@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.sensilabs.praktyki.entities.Author;
+import pl.sensilabs.praktyki.exceptions.AuthorNotFoundException;
 import pl.sensilabs.praktyki.mappers.AuthorMapper;
 import pl.sensilabs.praktyki.repositories.AuthorRepository;
 import pl.sensilabs.praktyki.requests.AuthorRequest;
@@ -28,14 +29,14 @@ public class AuthorService {
     public AuthorResponse findById(UUID authorId) {
         return authorRepository.findById(authorId)
                 .map(AuthorMapper::toResponse)
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(() -> new AuthorNotFoundException(authorId));
     }
 
     public void deleteById(UUID authorId) {
         if (authorRepository.existsById(authorId)) {
             authorRepository.deleteById(authorId);
         } else {
-            throw new EntityNotFoundException();
+            throw new AuthorNotFoundException(authorId);
         }
     }
 
