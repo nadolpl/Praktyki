@@ -5,9 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.sensilabs.praktyki.entities.BookType;
+import pl.sensilabs.praktyki.responses.BookTypeResponse;
 import pl.sensilabs.praktyki.services.BookTypeService;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @AllArgsConstructor
@@ -18,7 +20,7 @@ public class BookTypeController {
     private final BookTypeService bookTypeService;
 
     @GetMapping
-    public List<BookType> getTypes(){
+    public Set<BookTypeResponse> getTypes(){
         return bookTypeService.getTypes();
     }
 
@@ -29,7 +31,7 @@ public class BookTypeController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteType(@PathVariable int id){
         bookTypeService.deleteTypeById(id);
         log.info("Type deleted : {}", id);

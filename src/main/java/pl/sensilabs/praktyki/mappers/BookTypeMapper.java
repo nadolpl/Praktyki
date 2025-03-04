@@ -8,6 +8,9 @@ public interface BookTypeMapper {
     {
         if(bookType==null) return BookTypeResponse.builder().build();
 
-        return BookTypeResponse.builder().bookTypeName(bookType.getBookTypeName()).build();
+        return BookTypeResponse.builder().
+                bookTypeName(bookType.getBookTypeName()).
+                bookTypeId(bookType.getBookTypeId()).
+                build();
     }
 }
