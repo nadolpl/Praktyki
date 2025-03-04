@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
 
     problemDetail.setProperty("errors", errors);
 
-    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(problemDetail);
+    return ResponseEntity.badRequest().body(problemDetail);
   }
 
   // jak podasz niepoprawny JSON, to dostaniesz 400
