@@ -2,6 +2,7 @@ package pl.sensilabs.praktyki.controllers;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.sensilabs.praktyki.requests.AuthorRequest;
@@ -13,33 +14,31 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/author")
+@RequestMapping("/api/authors")
 public class AuthorController {
 
     private final AuthorService authorService;
 
     @GetMapping
     public ResponseEntity<Iterable<AuthorResponse>> findAll() {
-        Iterable<AuthorResponse> authors = authorService.findAll();
-        return ResponseEntity.ok(authors);
+        return ResponseEntity.ok(authorService.findAll());
     }
 
-    @GetMapping("{authorId}")
+    @GetMapping("/{authorId}")
     public ResponseEntity<AuthorResponse> findById(@PathVariable UUID authorId) {
-        AuthorResponse author = authorService.findById(authorId);
-        return ResponseEntity.ok(author);
+        return ResponseEntity.ok(authorService.findById(authorId));
     }
 
-    @DeleteMapping("{authorId}")
-    public ResponseEntity<Void> deleteById(@PathVariable UUID authorId) {
+    @DeleteMapping("/{authorId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteById(@PathVariable UUID authorId) {
         authorService.deleteById(authorId);
-        return ResponseEntity.noContent().build();
     }
 
     @PostMapping
     public ResponseEntity<AuthorResponse> create(@RequestBody @Valid AuthorRequest authorRequest) {
         AuthorResponse author = authorService.create(authorRequest);
-        return ResponseEntity.created(URI.create("/api/author/" + author.authorId())).body(author);
+        return ResponseEntity.created(URI.create("/api/authors/" + author.authorId())).body(author);
     }
 }
 
