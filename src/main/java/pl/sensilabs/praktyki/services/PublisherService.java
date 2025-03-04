@@ -7,7 +7,6 @@ import pl.sensilabs.praktyki.mappers.PublisherMapper;
 import pl.sensilabs.praktyki.repositories.PublisherRepository;
 import pl.sensilabs.praktyki.requests.PublisherRequest;
 import pl.sensilabs.praktyki.responses.PublisherResponse;
-import jakarta.persistence.EntityNotFoundException;
 
 import java.util.UUID;
 import java.util.stream.Collectors;

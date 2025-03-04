@@ -7,6 +7,6 @@ import pl.sensilabs.praktyki.entities.Book;
 import pl.sensilabs.praktyki.requests.PublisherRequest;
 
 @Repository
-public interface BookRepository extends JpaRepository<PublisherRequest, UUID> {
+public interface BookRepository extends JpaRepository<Book, UUID> {
 
 }

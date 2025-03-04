@@ -18,15 +18,19 @@ class PublishedBookMapperTest {
   void toResponse_givenEntity_shouldMapToPublishedBookResponse() {
     var book = new Book();
     book.setBookTitle("Hobbit");
+
     var author1 = new Author();
     author1.setFirstName("Andrzej");
     author1.setLastName("Sapkowski");
+
     var author2 = new Author();
     author2.setFirstName("Adam");
     author2.setLastName("Walter");
     book.setAuthors(new HashSet<Author>(List.of(author1, author2)));
+
     var publisher = new Publisher();
     publisher.setPublisherName("Helion");
+
     var bookType = new BookType();
     bookType.setBookTypeName("E-Book");
 
