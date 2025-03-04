@@ -1,5 +1,6 @@
 package pl.sensilabs.praktyki.controllers;
 
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -22,7 +23,7 @@ public class PublishedBookController {
   private final PublishedBookService publishedBookService;
 
   @GetMapping
-  public ResponseEntity<Set<PublishedBookResponse>> getAllPublishedBooks() {
+  public ResponseEntity<List<PublishedBookResponse>> getAllPublishedBooks() {
     var publishedBooks = publishedBookService.getAllPublishedBooks();
     log.info("Received all published books GET request");
     return ResponseEntity.ok(publishedBooks);

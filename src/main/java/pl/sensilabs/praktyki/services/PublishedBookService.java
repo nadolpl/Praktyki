@@ -1,8 +1,7 @@
 package pl.sensilabs.praktyki.services;
 
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.sensilabs.praktyki.exceptions.PublishedBookNotFoundException;
@@ -16,10 +15,10 @@ public class PublishedBookService {
 
   private final PublishedBookRepository publishedBookRepository;
 
-  public Set<PublishedBookResponse> getAllPublishedBooks() {
+  public List<PublishedBookResponse> getAllPublishedBooks() {
     return publishedBookRepository.findAll().stream()
         .map(PublishedBookMapper::toResponse)
-        .collect(Collectors.toSet());
+        .toList();
   }
 
   public PublishedBookResponse getPublishedBookById(UUID publishedBookId) {
