@@ -1,7 +1,8 @@
 package pl.sensilabs.praktyki.repositories;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,7 +34,7 @@ class PublishedBookRepositoryTest {
 
     var publishedBooks = publishedBookRepository.findAll();
 
-    Assertions.assertThat(publishedBooks)
+    assertThat(publishedBooks)
         .as("Published books should not be null or empty")
         .isNotEmpty()
         .isNotNull()
@@ -47,7 +48,7 @@ class PublishedBookRepositoryTest {
 
     var publishedBook = publishedBookRepository.findById(bookId).get();
 
-    Assertions.assertThat(publishedBook)
+    assertThat(publishedBook)
         .as("Published book should not be null")
         .isNotNull()
         .extracting(PublishedBook::getPublishedBookId).isEqualTo(bookId);
@@ -55,13 +56,11 @@ class PublishedBookRepositoryTest {
 
   @Test
   void save_givenPublishedBook_shouldSavePublishedBook() {
-    publishedBookRepository.save(new PublishedBook());
+    var publishedBook = publishedBookRepository.save(new PublishedBook());
 
-    Assertions.assertThat(publishedBookRepository.findAll())
-        .as("Published book should not be null or empty")
-        .isNotNull()
-        .isNotEmpty()
-        .hasSize(1);
+    assertThat(publishedBookRepository.existsById(publishedBook.getPublishedBookId()))
+        .as("Saved published book should be found")
+        .isTrue();
   }
 
   @Test
@@ -73,7 +72,7 @@ class PublishedBookRepositoryTest {
 
     publishedBookRepository.deleteById(bookId);
 
-    Assertions.assertThat(publishedBookRepository.findAll())
+    assertThat(publishedBookRepository.findAll())
         .as("One published book should be deleted from database")
         .hasSize(3); //4 before removal
   }
