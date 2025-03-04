@@ -16,7 +16,7 @@ public interface PublishedBookMapper {
         .publishedBookId(publishedBook.getPublishedBookId())
         .bookTitle(publishedBook.getBook().getBookTitle())
         .authors(publishedBook.getBook().getAuthors().stream()
-            .map(a -> a.getFirstName() + a.getLastName())
+            .map(a -> a.getFirstName() + " " + a.getLastName())
             .collect(Collectors.toSet()))
         .publisherName(publishedBook.getPublisher().getPublisherName())
         .bookTypeName(publishedBook.getBookType().getBookTypeName())
