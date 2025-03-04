@@ -3,7 +3,7 @@ package pl.sensilabs.praktyki.services;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.sensilabs.praktyki.entities.BookType;
-import pl.sensilabs.praktyki.exceptions.TypeNotFound;
+import pl.sensilabs.praktyki.exceptions.BookTypeNotFoundException;
 import pl.sensilabs.praktyki.repositories.BookTypeRepository;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public class BookTypeService {
 
     public void deleteTypeById(int id){
         if(!bookTypeRepository.existsById(id)){
-            throw new TypeNotFound(id);
+            throw new BookTypeNotFoundException(id);
         }
         bookTypeRepository.deleteById(id);
     }
