@@ -4,8 +4,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.parsing.Problem;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
@@ -17,29 +21,34 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
-  public ResponseEntity<Map<String, List<String>>> handleValidationErrors(
+  public ResponseEntity<ProblemDetail> handleValidationErrors(
       MethodArgumentNotValidException ex) {
+
+    ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+    problemDetail.setDetail("Validation failed");
+
     List<String> errors = ex.getBindingResult()
         .getFieldErrors().stream()
         .map(FieldError::getDefaultMessage)
         .toList();
-    return new ResponseEntity<>(getErrorsMap(errors),
-        new HttpHeaders(),
-        HttpStatus.BAD_REQUEST);
+
+    problemDetail.setProperty("errors", errors);
+
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(problemDetail);
   }
 
-  private Map<String, List<String>> getErrorsMap(List<String> errors) {
-    Map<String, List<String>> errorResponse = new HashMap<>();
-    errorResponse.put("errors", errors);
-    return errorResponse;
-  }
-
+  // jak podasz niepoprawny JSON, to dostaniesz 400
   @ExceptionHandler(HttpMessageNotReadableException.class)
-  public ResponseEntity<Map<String, List<String>>> handleHttpMessageNotReadableException(
+  public ResponseEntity<ProblemDetail> handleHttpMessageNotReadableException(
       HttpMessageNotReadableException ex) {
+
+    ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+    problemDetail.setDetail("Invalid JSON or XML format");
+
     List<String> errors = Collections.singletonList(ex.getMessage());
-    return new ResponseEntity<>(getErrorsMap(errors),
-        new HttpHeaders(),
-        HttpStatus.BAD_REQUEST);
+
+    problemDetail.setProperty("errors", errors);
+
+    return ResponseEntity.badRequest().body(problemDetail);
   }
 }
