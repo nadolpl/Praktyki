@@ -23,6 +23,14 @@ public class BookCategoryService {
         return bookCategoryRepository.findById(id).orElseThrow();
     }
 
+    public  BookCategory addBookCategory(BookCategory bookCategory){
+        if(bookCategoryRepository.existsBookCategoryByCategoryName(bookCategory.getCategoryName()))
+        {
+            throw  new IllegalArgumentException("BookCategory already exists");
+        };
+        return bookCategoryRepository.save(bookCategory);
+    }
+
     public void deleteById(int id){
         if(!bookCategoryRepository.existsById(id)){
             throw new BookCategoryNotFoundException(id);
