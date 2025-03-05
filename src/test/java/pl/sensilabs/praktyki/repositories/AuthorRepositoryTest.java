@@ -1,6 +1,7 @@
 package pl.sensilabs.praktyki.repositories;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -16,6 +17,13 @@ class AuthorRepositoryTest {
     @Autowired
     private AuthorRepository authorRepository;
 
+    Author author;
+
+    @BeforeEach
+    void setUp() {
+        author = new Author("Miłosz", "Nadolski", "miloszgaming@gmail.com");
+    }
+
     @AfterEach
     public void tearDown() {
         authorRepository.deleteAll();
@@ -25,7 +33,9 @@ class AuthorRepositoryTest {
     void findAll_shouldReturnAllAuthors() {
         // Given
         authorRepository.saveAll(List.of(
-           new Author(), new Author(), new Author()
+           new Author("Adam", "Małysz", "Niemałysz@skok.pl"),
+            new Author("Dawid", "Miłek", "bezkręgowce@bbc.com"),
+            new Author("Stanisław", "Wszelak", "lypa@warunek.pl")
         ));
 
         // When
@@ -42,8 +52,8 @@ class AuthorRepositoryTest {
     void findById_shouldReturnAuthor() {
 
         // Given
-        Author author = authorRepository.save(new Author());
-        var authorId = author.getId();
+        Author savedAuthor = authorRepository.save(author);
+        var authorId = savedAuthor.getId();
 
         // When
         var foundAuthor = authorRepository.findById(authorId).orElse(null);
@@ -52,15 +62,11 @@ class AuthorRepositoryTest {
         assertThat(foundAuthor)
                 .as("Found author should not be null")
                 .isNotNull()
-                .isEqualTo(author);
+                .isEqualTo(savedAuthor);
     }
 
     @Test
     void save_givenAuthor_shouldSaveAuthor() {
-
-        // Given
-        Author author = new Author();
-
         // When
         Author savedAuthor = authorRepository.save(author);
 
@@ -80,8 +86,8 @@ class AuthorRepositoryTest {
     void deleteById_shouldDeleteAuthor() {
 
         // Given
-        Author author = authorRepository.save(new Author());
-        var authorId = author.getId();
+        Author savedAuthor = authorRepository.save(author);
+        var authorId = savedAuthor.getId();
 
         assertThat(authorRepository.findById(authorId))
                 .as("Author should be retrievable from database before deletion")

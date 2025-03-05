@@ -14,7 +14,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.Set;
 import java.util.UUID;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,10 +21,15 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "book")
 public class Book {
+
+  public Book(String bookTitle, Integer pages, Integer categoryId) {
+    this.bookTitle = bookTitle;
+    this.pages = pages;
+    this.categoryId = categoryId;
+  }
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)

@@ -16,11 +16,10 @@ public interface AuthorMapper {
     }
 
     static Author toEntity(AuthorRequest request) {
-        return request == null ? Author.builder().build() :
-                Author.builder()
-                        .firstName(request.firstName())
-                        .lastName(request.lastName())
-                        .email(request.email())
-                        .build();
+        if(request == null) return null;
+        return new Author(
+            request.firstName(),
+            request.lastName(),
+            request.email());
     }
 }

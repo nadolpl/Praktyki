@@ -11,10 +11,14 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Table(name = "author")
 public class Author {
+
+    public Author(String firstName, String lastName, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -34,6 +38,5 @@ public class Author {
     @JoinTable(name = "book_author",
             joinColumns = @JoinColumn(name = "author_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id"))
-    @Builder.Default
     private Set<Book> books = new HashSet<>();
 }
