@@ -14,9 +14,7 @@ public interface PublisherMapper {
     }
 
     static Publisher toEntity(PublisherRequest request) {
-        return request == null ? Publisher.builder().build() :
-                Publisher.builder()
-                        .name(request.name())
-                        .build();
+        return request == null ? new Publisher() :
+                new Publisher(request.name());
     }
 }

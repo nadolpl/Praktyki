@@ -11,8 +11,6 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Table(name = "publisher")
 public class Publisher {
 
@@ -25,6 +23,9 @@ public class Publisher {
     private String name;
 
     @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Builder.Default
     private Set<PublishedBook> publishedBooks = new HashSet<>();
+
+    public Publisher(String name) {
+        this.name = name;
+    }
 }

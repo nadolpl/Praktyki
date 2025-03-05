@@ -25,9 +25,9 @@ class PublisherRepositoryTest {
     void findAll_shouldReturnAllPublishers() {
         // Given
         publisherRepository.saveAll(List.of(
-                new Publisher(null, "PWN", null),
-                new Publisher(null, "Helion", null),
-                new Publisher(null, "Tomek", null)
+                new Publisher("PWN"),
+                new Publisher("Helion"),
+                new Publisher("Tomek")
         ));
 
         // When
@@ -44,7 +44,7 @@ class PublisherRepositoryTest {
     void findById_shouldReturnPublisher() {
 
         // Given
-        Publisher publisher = publisherRepository.save(new Publisher(null, "Tomek", null));
+        Publisher publisher = publisherRepository.save(new Publisher("Tomek"));
         var publisherId = publisher.getId();
 
         // When
@@ -61,7 +61,7 @@ class PublisherRepositoryTest {
     void save_givenPublisher_shouldSavePublisher() {
 
         // Given
-        Publisher publisher = new Publisher(null, "Tomek", null);
+        Publisher publisher = new Publisher("Tomek");
 
         // When
         Publisher savedPublisher = publisherRepository.save(publisher);
@@ -82,7 +82,7 @@ class PublisherRepositoryTest {
     void deleteById_shouldDeletePublisher() {
 
         // Given
-        Publisher publisher = publisherRepository.save(new Publisher(null, "Tomek", null));
+        Publisher publisher = publisherRepository.save(new Publisher("Tomek"));
         var publisherId = publisher.getId();
 
         assertThat(publisherRepository.findById(publisherId))

@@ -20,6 +20,9 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class PublisherServiceTest {
 
+    private final String PUBLISHER_NAME = "Helion";
+    private final UUID PUBLISHER_ID = UUID.randomUUID();
+
     @Mock
     private PublisherRepository publisherRepository;
 
@@ -29,11 +32,8 @@ class PublisherServiceTest {
     @Test
     void findAll_shouldReturnAllPublishers(){
         // Given
-        UUID publisherId = UUID.randomUUID();
-        Publisher testPublisher = Publisher.builder()
-                .id(publisherId)
-                .name("Helion")
-                .build();
+        Publisher testPublisher = new Publisher(PUBLISHER_NAME);
+        testPublisher.setId(PUBLISHER_ID);
 
         when(publisherRepository.findAll()).thenReturn(List.of(testPublisher));
 
@@ -48,7 +48,7 @@ class PublisherServiceTest {
                         PublisherResponse::name
                 )
                 .containsExactly(
-                        tuple(publisherId, "Helion")
+                        tuple(PUBLISHER_ID, PUBLISHER_NAME)
                 );
 
         verify(publisherRepository).findAll();
@@ -58,16 +58,13 @@ class PublisherServiceTest {
     @Test
     void findById_shouldReturnPublisher() {
         // Given
-        UUID publisherId = UUID.randomUUID();
-        Publisher testPublisher = Publisher.builder()
-                .id(publisherId)
-                .name("Helion")
-                .build();
+        Publisher testPublisher = new Publisher(PUBLISHER_NAME);
+        testPublisher.setId(PUBLISHER_ID);
 
-        when(publisherRepository.findById(publisherId)).thenReturn(Optional.of(testPublisher));
+        when(publisherRepository.findById(PUBLISHER_ID)).thenReturn(Optional.of(testPublisher));
 
         // When
-        PublisherResponse publisher = publisherService.findById(publisherId);
+        PublisherResponse publisher = publisherService.findById(PUBLISHER_ID);
 
         // Then
         assertThat(publisher)
@@ -77,24 +74,23 @@ class PublisherServiceTest {
                         PublisherResponse::name
                 )
                 .containsExactly(
-                        publisherId, "Helion"
+                        PUBLISHER_ID, PUBLISHER_NAME
                 );
-        verify(publisherRepository).findById(publisherId);
+        verify(publisherRepository).findById(PUBLISHER_ID);
         verifyNoMoreInteractions(publisherRepository);
     }
 
     @Test
     void findById_shouldThrowExceptionWhenPublisherNotFound() {
         // Given
-        UUID publisherId = UUID.randomUUID();
-        when(publisherRepository.findById(publisherId)).thenReturn(Optional.empty());
+        when(publisherRepository.findById(PUBLISHER_ID)).thenReturn(Optional.empty());
 
         // When/Then
-        assertThatThrownBy(() -> publisherService.findById(publisherId))
+        assertThatThrownBy(() -> publisherService.findById(PUBLISHER_ID))
                 .isInstanceOf(PublisherNotFoundException.class)
-                .hasMessageContaining(publisherId.toString());
+                .hasMessageContaining(PUBLISHER_ID.toString());
 
-        verify(publisherRepository).findById(publisherId);
+        verify(publisherRepository).findById(PUBLISHER_ID);
         verifyNoMoreInteractions(publisherRepository);
     }
 }
