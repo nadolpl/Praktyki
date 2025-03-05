@@ -32,12 +32,8 @@ class AuthorServiceTest {
     @BeforeEach
     void setUp() {
         authorId = UUID.randomUUID();
-        testAuthor = Author.builder()
-                .id(authorId)
-                .firstName("Jan")
-                .lastName("Kowalski")
-                .email("jan@kowalski.com")
-                .build();
+        testAuthor = new Author("Jan", "Kowalski", "jan@kowalski.com");
+        testAuthor.setId(authorId);
     }
 
     @Test

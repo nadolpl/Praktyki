@@ -1,6 +1,5 @@
 package pl.sensilabs.praktyki.mappers;
 
-import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.Test;
 import pl.sensilabs.praktyki.entities.Author;
 import pl.sensilabs.praktyki.entities.Book;
@@ -25,14 +24,9 @@ class AuthorMapperTest {
     @Test
     void toResponse_givenEntity_shouldMapToAuthorResponse() {
         // given
-        Author author = Author.builder()
-                .id(AUTHOR_ID)
-                .firstName(FIRST_NAME)
-                .lastName(LAST_NAME)
-                .email(EMAIL)
-                .books(BOOKS)
-                .build();
-
+        Author author = new Author(FIRST_NAME, LAST_NAME, EMAIL);
+        author.setId(AUTHOR_ID);
+        author.setBooks(BOOKS);
         // when
         AuthorResponse response = AuthorMapper.toResponse(author);
 
