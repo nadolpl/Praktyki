@@ -1,7 +1,7 @@
 package pl.sensilabs.praktyki.controllers;
 
 import jakarta.validation.Valid;
-import java.util.Set;
+import java.net.URI;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,37 +27,39 @@ public class BookController {
   private final BookService bookService;
 
   @GetMapping
-  public ResponseEntity<Set<BookResponse>> getAllBooks() {
-    var response = bookService.getAllBooks();
+  public ResponseEntity<Iterable<BookResponse>> getAllBooks() {
     log.info("Received all books GET request");
+    var response = bookService.getAllBooks();
     return ResponseEntity.ok(response);
   }
 
   @GetMapping("/{bookId}")
-  public ResponseEntity<BookResponse> getBookById(@PathVariable("bookId") UUID bookId) {
-    var book = bookService.getBookById(bookId);
+  public ResponseEntity<BookResponse> getBookById(@PathVariable UUID bookId) {
     log.info("Received a book GET request with id {}", bookId);
+    var book = bookService.getBookById(bookId);
     return ResponseEntity.ok(book);
   }
 
   @PostMapping
-  public ResponseEntity<BookResponse> createBook(@RequestBody BookRequest bookRequest) {
+  public ResponseEntity<BookResponse> createBook(
+      @Valid @RequestBody BookRequest bookRequest) {
+    log.info("Received a book POST request with body: {}", bookRequest);
     var book = bookService.createBook(bookRequest);
-    log.info("Received a book POST request");
-    return ResponseEntity.ok(book);
+    var location = URI.create("/api/books/" + book.bookId());
+    return ResponseEntity.created(location).body(book);
   }
 
   @PutMapping("/{bookId}")
   public ResponseEntity<BookResponse> updateBook(
-      @PathVariable("bookId") UUID bookId,
+      @PathVariable UUID bookId,
       @Valid @RequestBody BookRequest bookRequest) {
+    log.info("Received a book PUT request with id {} and body {}", bookId, bookRequest);
     var book = bookService.updateBook(bookId, bookRequest);
-    log.info("Received a book PUT request with id {}", bookId);
     return ResponseEntity.ok(book);
   }
 
   @DeleteMapping("/{bookId}")
-  public ResponseEntity<Void> deleteBookById(@PathVariable("bookId") UUID bookId) {
+  public ResponseEntity<Void> deleteBookById(@PathVariable UUID bookId) {
     log.info("Received a book DELETE request with id {}", bookId);
     bookService.deleteBookById(bookId);
     return ResponseEntity.noContent().build();

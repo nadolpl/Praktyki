@@ -1,7 +1,7 @@
 package pl.sensilabs.praktyki.services;
 
-import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,22 +26,23 @@ public class PublishedBookService {
   private final PublisherRepository publisherRepository;
   private final BookTypeRepository bookTypeRepository;
 
-  public List<PublishedBookResponse> getAllPublishedBooks() {
+  public Iterable<PublishedBookResponse> getAllPublishedBooks() {
     return publishedBookRepository.findAll().stream()
         .map(PublishedBookMapper::toResponse)
-        .toList();
+        .collect(Collectors.toSet());
   }
 
   public PublishedBookResponse getPublishedBookById(UUID publishedBookId) {
     return publishedBookRepository.findById(publishedBookId)
         .map(PublishedBookMapper::toResponse)
-        .orElseThrow(() -> new PublishedBookNotFoundException(publishedBookId)
-        );
+        .orElseThrow(() -> new PublishedBookNotFoundException(publishedBookId));
   }
 
+  @Transactional
   public PublishedBookResponse createPublishedBook(PublishedBookRequest publishedBookRequest) {
     validatePublishedBookRequest(publishedBookRequest);
-    var entity = publishedBookRepository.save(PublishedBookMapper.toEntity(publishedBookRequest));
+    var entity = publishedBookRepository.save(
+        PublishedBookMapper.toEntity(publishedBookRequest));
     return PublishedBookMapper.toResponse(entity);
   }
 
@@ -71,6 +72,7 @@ public class PublishedBookService {
     }
   }
 
+  @Transactional
   public void deletePublishedBookById(UUID publishedBookId) {
     if (!publishedBookRepository.existsById(publishedBookId)) {
       throw new PublishedBookNotFoundException(publishedBookId);

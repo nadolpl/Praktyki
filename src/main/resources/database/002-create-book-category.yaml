@@ -11,6 +11,7 @@ databaseChangeLog:
                   name: category_id
                   type: int
                   constraints:
+                    primaryKey: true
                     nullable: false
                     generatedByDefault: true
               - column:

@@ -1,0 +1,13 @@
+# testowy insert do obczajenia czy liquibase znowu wykona insert
+
+databaseChangeLog:
+  - changeSet:
+      id: 008-insert-book-category.yaml
+      author: konrad.niedzielski
+      changes:
+        - insert:
+            tableName: book_category
+            columns:
+              - column:
+                  name: category_name
+                  value: "test123"

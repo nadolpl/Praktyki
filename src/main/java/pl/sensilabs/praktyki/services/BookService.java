@@ -29,7 +29,7 @@ public class BookService {
   private final AuthorRepository authorRepository;
   private final BookCategoryRepository bookCategoryRepository;
 
-  public Set<BookResponse> getAllBooks() {
+  public Iterable<BookResponse> getAllBooks() {
     return bookRepository.findAll().stream()
         .map(BookMapper::toResponse)
         .collect(Collectors.toSet());
@@ -42,6 +42,7 @@ public class BookService {
         );
   }
 
+  @Transactional
   public BookResponse createBook(BookRequest bookRequest) {
     validateBookCategoryFromRequest(bookRequest.categoryId());
     var authorsIds = bookRequest.authors().stream()
@@ -95,6 +96,7 @@ public class BookService {
     }
   }
 
+  @Transactional
   public void deleteBookById(UUID bookId) {
     if (!bookRepository.existsById(bookId)) {
       throw new BookNotFoundException(bookId);
