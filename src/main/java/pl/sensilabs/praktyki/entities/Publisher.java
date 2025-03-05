@@ -1,30 +1,30 @@
 package pl.sensilabs.praktyki.entities;
 
 import jakarta.persistence.*;
-import java.util.List;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
-import lombok.Setter;
 
 @Entity
-@Builder
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name = "publisher")
 public class Publisher {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID publisherId;
+    @Column(name = "publisher_id")
+    private UUID id;
 
-    private String publisherName;
+    @Column(name = "publisher_name", nullable = false)
+    private String name;
 
-    @OneToMany(mappedBy = "publisher")
-    List<PublishedBook> publishedBooks;
+    @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private Set<PublishedBook> publishedBooks = new HashSet<>();
 }

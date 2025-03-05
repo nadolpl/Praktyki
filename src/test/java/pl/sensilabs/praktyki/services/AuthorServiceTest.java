@@ -1,5 +1,6 @@
 package pl.sensilabs.praktyki.services;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -25,17 +26,23 @@ class AuthorServiceTest {
     @InjectMocks
     private AuthorService authorService;
 
-    @Test
-    void findAll_shouldReturnAllAuthors() {
-        // Given
-        UUID authorId = UUID.randomUUID();
-        Author testAuthor = Author.builder()
-                .authorId(authorId)
+    private UUID authorId;
+    private Author testAuthor;
+
+    @BeforeEach
+    void setUp() {
+        authorId = UUID.randomUUID();
+        testAuthor = Author.builder()
+                .id(authorId)
                 .firstName("Jan")
                 .lastName("Kowalski")
                 .email("jan@kowalski.com")
                 .build();
+    }
 
+    @Test
+    void findAll_shouldReturnAllAuthors() {
+        // Given
         when(authorRepository.findAll()).thenReturn(List.of(testAuthor));
 
         // When
@@ -45,7 +52,7 @@ class AuthorServiceTest {
         assertThat(authors)
                 .hasSize(1)
                 .extracting(
-                        AuthorResponse::authorId,
+                        AuthorResponse::id,
                         AuthorResponse::firstName,
                         AuthorResponse::lastName,
                         AuthorResponse::email
@@ -61,14 +68,6 @@ class AuthorServiceTest {
     @Test
     void findById_shouldReturnAuthor() {
         // Given
-        UUID authorId = UUID.randomUUID();
-        Author testAuthor = Author.builder()
-                .authorId(authorId)
-                .firstName("Jan")
-                .lastName("Kowalski")
-                .email("jan@kowalski.com")
-                .build();
-
         when(authorRepository.findById(authorId)).thenReturn(java.util.Optional.of(testAuthor));
 
         // When
@@ -78,7 +77,7 @@ class AuthorServiceTest {
         assertThat(response)
                 .isNotNull()
                 .extracting(
-                    AuthorResponse::authorId,
+                    AuthorResponse::id,
                     AuthorResponse::firstName,
                     AuthorResponse::lastName,
                     AuthorResponse::email
@@ -90,34 +89,4 @@ class AuthorServiceTest {
         verify(authorRepository).findById(authorId);
         verifyNoMoreInteractions(authorRepository);
     }
-
-//    @Test
-//    void save_shouldSaveAuthor(){
-//        // Given
-//        AuthorRequest testAuthor = AuthorRequest.builder()
-//                .firstName("Jan")
-//                .lastName("Kowalski")
-//                .email("jan@kowalski.com")
-//                .build();
-//
-//        Author authorEntity = AuthorMapper.toEntity(testAuthor);
-//
-//        when(authorRepository.save(authorEntity)).thenReturn(authorEntity);
-//
-//        // When
-//        AuthorResponse response = authorService.create(testAuthor);
-//
-//        // Then
-//
-//        assertThat(response)
-//                .isNotNull()
-//                .extracting(
-//                        AuthorResponse::firstName,
-//                        AuthorResponse::lastName,
-//                        AuthorResponse::email
-//                )
-//                .containsExactly(
-//                        "Jan", "Kowalski", "jan@kowalski.com"
-//                );
-//    }
 }

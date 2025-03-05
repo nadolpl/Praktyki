@@ -43,7 +43,7 @@ class AuthorRepositoryTest {
 
         // Given
         Author author = authorRepository.save(new Author());
-        var authorId = author.getAuthorId();
+        var authorId = author.getId();
 
         // When
         var foundAuthor = authorRepository.findById(authorId).orElse(null);
@@ -67,10 +67,10 @@ class AuthorRepositoryTest {
         // Then
         assertThat(savedAuthor)
                 .as("Saved author should have an ID")
-                .extracting(Author::getAuthorId)
+                .extracting(Author::getId)
                 .isNotNull();
 
-        assertThat(authorRepository.findById(savedAuthor.getAuthorId()))
+        assertThat(authorRepository.findById(savedAuthor.getId()))
                 .as("Author should be retrievable from database")
                 .isPresent()
                 .hasValueSatisfying(found -> assertThat(found).isEqualTo(savedAuthor));
@@ -81,7 +81,7 @@ class AuthorRepositoryTest {
 
         // Given
         Author author = authorRepository.save(new Author());
-        var authorId = author.getAuthorId();
+        var authorId = author.getId();
 
         assertThat(authorRepository.findById(authorId))
                 .as("Author should be retrievable from database before deletion")

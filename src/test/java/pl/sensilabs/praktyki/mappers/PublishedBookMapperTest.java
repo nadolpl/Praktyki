@@ -32,7 +32,7 @@ class PublishedBookMapperTest {
     book.setAuthors(new HashSet<>(List.of(author1, author2)));
 
     var publisher = new Publisher();
-    publisher.setPublisherName("Helion");
+    publisher.setName("Helion");
 
     var bookType = new BookType();
     bookType.setBookTypeName("E-Book");
@@ -51,7 +51,7 @@ class PublishedBookMapperTest {
         .as("Response should not be null")
         .isNotNull();
     assertThat(response.bookTitle()).isEqualTo(entity.getBook().getBookTitle());
-    assertThat(response.publisherName()).isEqualTo(entity.getPublisher().getPublisherName());
+    assertThat(response.publisherName()).isEqualTo(entity.getPublisher().getName());
     assertThat(response.bookTypeName()).isEqualTo(entity.getBookType().getBookTypeName());
     assertThat(response.authors())
         .containsExactlyInAnyOrder("Andrzej Sapkowski", "Adam Walter");

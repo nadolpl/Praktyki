@@ -58,12 +58,12 @@ class PublishedBookServiceTest {
     var author = new Author();
     author.setFirstName("Adam");
     author.setLastName("Mickiewicz");
-    author.setAuthorId(UUID.randomUUID());
+    author.setId(UUID.randomUUID());
     book.setAuthors(new HashSet<>(List.of(author)));
 
     var publisher = new Publisher();
-    publisher.setPublisherName("PWN");
-    publisher.setPublisherId(UUID.randomUUID());
+    publisher.setName("PWN");
+    publisher.setId(UUID.randomUUID());
 
     var bookType = new BookType();
     bookType.setBookTypeId(3);
@@ -76,7 +76,7 @@ class PublishedBookServiceTest {
       pb.setBook(book);
       pb.setBookId(book.getBookId());
       pb.setPublisher(publisher);
-      pb.setPublisherId(publisher.getPublisherId());
+      pb.setPublisherId(publisher.getId());
       pb.setPublishDate(LocalDate.now());
       pb.setBookType(bookType);
       pb.setBookTypeId(bookType.getBookTypeId());

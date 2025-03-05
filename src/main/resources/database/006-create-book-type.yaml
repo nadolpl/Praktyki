@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: 006-create-book-type
+      author: konrad.niedzielski
+      changes:
+        - createTable:
+            tableName: book_type
+            ifNotExists: true
+            columns:
+              - column:
+                  name: book_type_id
+                  type: int
+                  constraints:
+                    primaryKey: true
+                    generatedByDefault: true
+              - column:
+                  name: book_type_name
+                  type: varchar
+                  constraints:
+                    nullable: false

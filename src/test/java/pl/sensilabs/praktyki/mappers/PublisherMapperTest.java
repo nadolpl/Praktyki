@@ -16,8 +16,8 @@ class PublisherMapperTest {
         // Given
         UUID publisherId = UUID.randomUUID();
         Publisher publisher = Publisher.builder()
-                .publisherId(publisherId)
-                .publisherName("Wydawnictwo Znak")
+                .id(publisherId)
+                .name("Wydawnictwo Znak")
                 .build();
 
         // When
@@ -27,9 +27,9 @@ class PublisherMapperTest {
         assertThat(response)
                 .isNotNull()
                 .extracting(
-                        PublisherResponse::publisherId,
-                        PublisherResponse::publisherName
+                        PublisherResponse::id,
+                        PublisherResponse::name
                 )
-                .containsExactly(publisher.getPublisherName());
+                .containsExactly(publisher.getName());
     }
 }

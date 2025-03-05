@@ -43,7 +43,7 @@ class PublisherRepositoryTest {
 
         // Given
         Publisher publisher = publisherRepository.save(new Publisher());
-        var publisherId = publisher.getPublisherId();
+        var publisherId = publisher.getId();
 
         // When
         var foundPublisher = publisherRepository.findById(publisherId).orElse(null);
@@ -67,10 +67,10 @@ class PublisherRepositoryTest {
         // Then
         assertThat(savedPublisher)
                 .as("Saved publisher should have an ID")
-                .extracting(Publisher::getPublisherId)
+                .extracting(Publisher::getId)
                 .isNotNull();
 
-        assertThat(publisherRepository.findById(savedPublisher.getPublisherId()))
+        assertThat(publisherRepository.findById(savedPublisher.getId()))
                 .as("Publisher should be retrievable from database")
                 .isPresent()
                 .hasValueSatisfying(found -> assertThat(found).isEqualTo(savedPublisher));
@@ -81,7 +81,7 @@ class PublisherRepositoryTest {
 
         // Given
         Publisher publisher = publisherRepository.save(new Publisher());
-        var publisherId = publisher.getPublisherId();
+        var publisherId = publisher.getId();
 
         assertThat(publisherRepository.findById(publisherId))
                 .as("Publisher should be retrievable from database before deletion")

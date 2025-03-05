@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: 005-create-publisher
+      author: konrad.niedzielski
+      changes:
+        - createTable:
+            tableName: publisher
+            ifNotExists: true
+            columns:
+              - column:
+                  name: publisher_id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+              - column:
+                 name: publisher_name
+                 type: varchar
+                 constraints:
+                   nullable: false
