@@ -10,6 +10,7 @@ databaseChangeLog:
               - column:
                   name: category_id
                   type: int
+                  autoIncrement: true
                   constraints:
                     primaryKey: true
                     nullable: false
