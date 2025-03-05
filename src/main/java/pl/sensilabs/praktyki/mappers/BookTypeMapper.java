@@ -13,4 +13,5 @@ public interface BookTypeMapper {
                 bookTypeId(bookType.getBookTypeId()).
                 build();
     }
+
 }

@@ -20,7 +20,7 @@ public class BookTypeController {
     private final BookTypeService bookTypeService;
 
     @GetMapping
-    public Set<BookTypeResponse> getTypes(){
+    public List<BookType> getTypes(){
         return bookTypeService.getTypes();
     }
 

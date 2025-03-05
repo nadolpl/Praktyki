@@ -19,7 +19,7 @@ public class BookCategoryController {
     private final BookCategoryService bookCategoryService;
 
     @GetMapping
-        public ResponseEntity<List<BookCategoryResponse>> getTypes(){
+        public ResponseEntity<List<BookCategory>> getTypes(){
         var response =  bookCategoryService.getTypes();
         log.info("Recived  book category response: {}", response);
         return ResponseEntity.ok(response);
