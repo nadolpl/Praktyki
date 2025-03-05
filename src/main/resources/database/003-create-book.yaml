@@ -11,6 +11,7 @@ databaseChangeLog:
                 name: book_id
                 type: uuid
                 constraints:
+                  primaryKey: true
                   nullable: false
             - column:
                 name: book_title
@@ -26,6 +27,5 @@ databaseChangeLog:
                 name: category_id
                 type: int
                 constraints:
-                  primaryKey: true
                   foreignKeyName: fk_book_category
                   references: book_category(category_id)
