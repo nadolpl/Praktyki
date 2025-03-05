@@ -31,8 +31,8 @@ class PublisherServiceTest {
         // Given
         UUID publisherId = UUID.randomUUID();
         Publisher testPublisher = Publisher.builder()
-                .publisherId(publisherId)
-                .publisherName("Helion")
+                .id(publisherId)
+                .name("Helion")
                 .build();
 
         when(publisherRepository.findAll()).thenReturn(List.of(testPublisher));
@@ -44,8 +44,8 @@ class PublisherServiceTest {
         assertThat(publishers)
                 .hasSize(1)
                 .extracting(
-                        PublisherResponse::publisherId,
-                        PublisherResponse::publisherName
+                        PublisherResponse::id,
+                        PublisherResponse::name
                 )
                 .containsExactly(
                         tuple(publisherId, "Helion")
@@ -60,8 +60,8 @@ class PublisherServiceTest {
         // Given
         UUID publisherId = UUID.randomUUID();
         Publisher testPublisher = Publisher.builder()
-                .publisherId(publisherId)
-                .publisherName("Helion")
+                .id(publisherId)
+                .name("Helion")
                 .build();
 
         when(publisherRepository.findById(publisherId)).thenReturn(Optional.of(testPublisher));
@@ -73,8 +73,8 @@ class PublisherServiceTest {
         assertThat(publisher)
                 .isNotNull()
                 .extracting(
-                        PublisherResponse::publisherId,
-                        PublisherResponse::publisherName
+                        PublisherResponse::id,
+                        PublisherResponse::name
                 )
                 .containsExactly(
                         publisherId, "Helion"

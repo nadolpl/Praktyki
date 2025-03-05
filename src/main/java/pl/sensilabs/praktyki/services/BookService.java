@@ -45,7 +45,7 @@ public class BookService {
   public BookResponse createBook(BookRequest bookRequest) {
     validateBookCategoryFromRequest(bookRequest.categoryId());
     var authorsIds = bookRequest.authors().stream()
-        .map(AuthorIdRequest::authorId)
+        .map(AuthorIdRequest::id)
         .collect(Collectors.toSet());
     validateAuthorsFromRequest(authorsIds);
 
@@ -62,7 +62,7 @@ public class BookService {
   public BookResponse updateBook(UUID bookId, BookRequest bookRequest) {
     validateBookCategoryFromRequest(bookRequest.categoryId());
     var authorsIds = bookRequest.authors().stream()
-        .map(AuthorIdRequest::authorId)
+        .map(AuthorIdRequest::id)
         .collect(Collectors.toSet());
     validateAuthorsFromRequest(authorsIds);
 
@@ -87,7 +87,7 @@ public class BookService {
 
   private void validateAuthorsFromRequest(Set<UUID> authors) {
     var allAuthors = authorRepository.findAllBy().stream()
-        .map(AuthorIdOnly::getAuthorId).toList();
+        .map(AuthorIdOnly::getId).toList();
     for (var author : authors) {
       if (!allAuthors.contains(author)) {
         throw new AuthorNotFoundException(author);

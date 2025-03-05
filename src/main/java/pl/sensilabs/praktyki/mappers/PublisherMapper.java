@@ -8,15 +8,15 @@ public interface PublisherMapper {
     static PublisherResponse toResponse(Publisher publisher) {
         return publisher == null ? PublisherResponse.builder().build() :
                 PublisherResponse.builder()
-                        .publisherId(publisher.getPublisherId())
-                        .publisherName(publisher.getPublisherName())
+                        .id(publisher.getId())
+                        .name(publisher.getName())
                         .build();
     }
 
     static Publisher toEntity(PublisherRequest request) {
         return request == null ? Publisher.builder().build() :
                 Publisher.builder()
-                        .publisherName(request.publisherName())
+                        .name(request.name())
                         .build();
     }
 }

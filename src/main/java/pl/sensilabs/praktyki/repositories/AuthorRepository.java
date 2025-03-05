@@ -12,6 +12,6 @@ public interface AuthorRepository extends JpaRepository<Author, UUID> {
   List<AuthorIdOnly> findAllBy();
 
   interface AuthorIdOnly {
-    UUID getAuthorId();
+    UUID getId();
   }
 }

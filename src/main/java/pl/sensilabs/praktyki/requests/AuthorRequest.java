@@ -17,5 +17,6 @@ public record AuthorRequest(
 
         @NotBlank(message = "Email cannot be empty")
         @Email(message = "Email should be valid")
+        @Size(max = 255, message = "Email cannot be longer than 255 characters")
         String email
 ) { }

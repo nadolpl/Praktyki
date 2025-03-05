@@ -8,7 +8,7 @@ public interface AuthorMapper {
     static AuthorResponse toResponse(Author author) {
         return author == null ? AuthorResponse.builder().build() :
                 AuthorResponse.builder()
-                        .authorId(author.getAuthorId())
+                        .id(author.getId())
                         .firstName(author.getFirstName())
                         .lastName(author.getLastName())
                         .email(author.getEmail())

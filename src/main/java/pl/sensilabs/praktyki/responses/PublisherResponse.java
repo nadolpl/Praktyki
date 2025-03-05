@@ -5,5 +5,5 @@ import lombok.Builder;
 import java.util.UUID;
 
 @Builder
-public record PublisherResponse (UUID publisherId, String publisherName) {
+public record PublisherResponse (UUID id, String name) {
 }

@@ -1,5 +1,6 @@
 package pl.sensilabs.praktyki.services;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.sensilabs.praktyki.exceptions.PublisherNotFoundException;
@@ -30,14 +31,16 @@ public class PublisherService {
                 .orElseThrow(() -> new PublisherNotFoundException(publisherId));
     }
 
+    @Transactional
     public void deleteById(UUID publisherId) {
-        if (publisherRepository.existsById(publisherId)) {
-            publisherRepository.deleteById(publisherId);
-        } else {
+        if (!publisherRepository.existsById(publisherId)) {
             throw new PublisherNotFoundException(publisherId);
         }
+
+        publisherRepository.deleteById(publisherId);
     }
 
+    @Transactional
     public PublisherResponse create(PublisherRequest request) {
         return PublisherMapper.toResponse(publisherRepository.save(PublisherMapper.toEntity(request)));
     }

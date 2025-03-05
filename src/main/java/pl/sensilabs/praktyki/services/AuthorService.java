@@ -1,9 +1,8 @@
 package pl.sensilabs.praktyki.services;
 
-import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.sensilabs.praktyki.entities.Author;
 import pl.sensilabs.praktyki.exceptions.AuthorNotFoundException;
 import pl.sensilabs.praktyki.mappers.AuthorMapper;
 import pl.sensilabs.praktyki.repositories.AuthorRepository;
@@ -32,15 +31,19 @@ public class AuthorService {
                 .orElseThrow(() -> new AuthorNotFoundException(authorId));
     }
 
+    @Transactional
     public void deleteById(UUID authorId) {
-        if (authorRepository.existsById(authorId)) {
-            authorRepository.deleteById(authorId);
-        } else {
+        if (!authorRepository.existsById(authorId)) {
             throw new AuthorNotFoundException(authorId);
         }
+
+        authorRepository.deleteById(authorId);
     }
 
+    @Transactional
     public AuthorResponse create(AuthorRequest request) {
-        return AuthorMapper.toResponse(authorRepository.save(AuthorMapper.toEntity(request)));
+        return AuthorMapper.toResponse(
+                authorRepository.save(AuthorMapper.toEntity(request))
+        );
     }
 }

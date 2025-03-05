@@ -38,6 +38,7 @@ public class PublisherController {
     @PostMapping
     public ResponseEntity<PublisherResponse> create(@RequestBody @Valid PublisherRequest request) {
         PublisherResponse publisher = publisherService.create(request);
-        return ResponseEntity.created(URI.create("/api/publishers/" + publisher.publisherId())).body(publisher);
+        URI location = URI.create("/api/publishers/" + publisher.id());
+        return ResponseEntity.created(location).body(publisher);
     }
 }
