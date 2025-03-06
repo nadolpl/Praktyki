@@ -4,9 +4,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.sensilabs.praktyki.entities.BookCategory;
 import pl.sensilabs.praktyki.exceptions.BookCategoryNotFoundException;
+import pl.sensilabs.praktyki.mappers.BookCategoryMapper;
 import pl.sensilabs.praktyki.repositories.BookCategoryRepository;
+import pl.sensilabs.praktyki.responses.BookCategoryResponse;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @AllArgsConstructor
@@ -15,8 +18,11 @@ public class BookCategoryService {
 
     private final BookCategoryRepository bookCategoryRepository;
 
-    public List<BookCategory> getTypes(){
-        return bookCategoryRepository.findAll();
+    public List<BookCategoryResponse> getTypes(){
+        return bookCategoryRepository.findAll().
+                stream().
+                map(BookCategoryMapper::toResponse).
+                collect(Collectors.toList());
     }
 
     public BookCategory getTypeById(int id){
