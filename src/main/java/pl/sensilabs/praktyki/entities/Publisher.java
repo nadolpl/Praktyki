@@ -16,10 +16,8 @@ public class Publisher {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "publisher_id")
     private UUID id;
 
-    @Column(name = "publisher_name", nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL, orphanRemoval = true)
