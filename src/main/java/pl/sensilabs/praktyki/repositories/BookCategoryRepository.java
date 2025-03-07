@@ -6,5 +6,5 @@ import pl.sensilabs.praktyki.entities.BookCategory;
 
 @Repository
 public interface BookCategoryRepository extends JpaRepository<BookCategory, Integer> {
- boolean existsBookCategoryByCategoryName(String categoryName);
+ boolean existsBookCategoryByCategoryName(String bookCategoryRequest);
 }

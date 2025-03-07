@@ -1,10 +1,12 @@
 package pl.sensilabs.praktyki.controllers;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.sensilabs.praktyki.entities.BookCategory;
+import pl.sensilabs.praktyki.requests.BookCategoryRequest;
 import pl.sensilabs.praktyki.responses.BookCategoryResponse;
 import pl.sensilabs.praktyki.services.BookCategoryService;
 
@@ -26,8 +28,8 @@ public class BookCategoryController {
     }
 
     @PostMapping("/add")
-        public ResponseEntity<BookCategory> addBookCategory(@RequestBody BookCategory bookCategory) {
-        var response = bookCategoryService.addBookCategory(bookCategory);
+        public ResponseEntity<BookCategoryResponse> addBookCategory(@Valid @RequestBody BookCategoryRequest bookCategoryRequest) {
+        var response = bookCategoryService.addBookCategory(bookCategoryRequest);
         log.info("Added BookCategory");
         return ResponseEntity.ok(response);
 
