@@ -22,26 +22,26 @@ import pl.sensilabs.praktyki.services.BookService;
 @Slf4j
 @RestController
 @RequestMapping("/api/books")
-public class BookController {
+class BookController {
 
   private final BookService bookService;
 
   @GetMapping
-  public ResponseEntity<Iterable<BookResponse>> getAllBooks() {
+  ResponseEntity<Iterable<BookResponse>> getAllBooks() {
     log.info("Received all books GET request");
     var response = bookService.getAllBooks();
     return ResponseEntity.ok(response);
   }
 
   @GetMapping("/{bookId}")
-  public ResponseEntity<BookResponse> getBookById(@PathVariable UUID bookId) {
+  ResponseEntity<BookResponse> getBookById(@PathVariable UUID bookId) {
     log.info("Received a book GET request with id {}", bookId);
     var book = bookService.getBookById(bookId);
     return ResponseEntity.ok(book);
   }
 
   @PostMapping
-  public ResponseEntity<BookResponse> createBook(
+  ResponseEntity<BookResponse> createBook(
       @Valid @RequestBody BookRequest bookRequest) {
     log.info("Received a book POST request with body: {}", bookRequest);
     var book = bookService.createBook(bookRequest);
@@ -50,7 +50,7 @@ public class BookController {
   }
 
   @PutMapping("/{bookId}")
-  public ResponseEntity<BookResponse> updateBook(
+  ResponseEntity<BookResponse> updateBook(
       @PathVariable UUID bookId,
       @Valid @RequestBody BookRequest bookRequest) {
     log.info("Received a book PUT request with id {} and body {}", bookId, bookRequest);
@@ -59,7 +59,7 @@ public class BookController {
   }
 
   @DeleteMapping("/{bookId}")
-  public ResponseEntity<Void> deleteBookById(@PathVariable UUID bookId) {
+  ResponseEntity<Void> deleteBookById(@PathVariable UUID bookId) {
     log.info("Received a book DELETE request with id {}", bookId);
     bookService.deleteBookById(bookId);
     return ResponseEntity.noContent().build();

@@ -22,19 +22,19 @@ import pl.sensilabs.praktyki.services.PublishedBookService;
 @Slf4j
 @RestController
 @RequestMapping("/api/published-books")
-public class PublishedBookController {
+class PublishedBookController {
 
   private final PublishedBookService publishedBookService;
 
   @GetMapping
-  public ResponseEntity<Iterable<PublishedBookResponse>> getAllPublishedBooks() {
+  ResponseEntity<Iterable<PublishedBookResponse>> getAllPublishedBooks() {
     log.info("Received all published books GET request");
     var publishedBooks = publishedBookService.getAllPublishedBooks();
     return ResponseEntity.ok(publishedBooks);
   }
 
   @GetMapping("/{publishedBookId}")
-  public ResponseEntity<PublishedBookResponse> getPublishedBookById(
+  ResponseEntity<PublishedBookResponse> getPublishedBookById(
       @PathVariable UUID publishedBookId) {
     log.info("Received published book GET request with id {}", publishedBookId);
     var publishedBook = publishedBookService.getPublishedBookById(publishedBookId);
@@ -42,7 +42,7 @@ public class PublishedBookController {
   }
 
   @PostMapping
-  public ResponseEntity<PublishedBookResponse> createPublishedBook(
+  ResponseEntity<PublishedBookResponse> createPublishedBook(
       @Valid @RequestBody PublishedBookRequest request) {
     log.info("Received published book POST request with body {}", request);
     var publishedBook = publishedBookService.createPublishedBook(request);
@@ -51,7 +51,7 @@ public class PublishedBookController {
   }
 
   @PutMapping("/{publishedBookId}")
-  public ResponseEntity<PublishedBookResponse> updatePublishedBook(
+  ResponseEntity<PublishedBookResponse> updatePublishedBook(
       @PathVariable UUID publishedBookId,
       @Valid @RequestBody PublishedBookRequest request) {
     log.info("Received published book PUT request with id {} and body {}", publishedBookId, request);
@@ -60,7 +60,7 @@ public class PublishedBookController {
   }
 
   @DeleteMapping("/{publishedBookId}")
-  public ResponseEntity<Void> deletePublishedBookById(@PathVariable UUID publishedBookId) {
+  ResponseEntity<Void> deletePublishedBookById(@PathVariable UUID publishedBookId) {
     log.info("Received published book DELETE request with id {}", publishedBookId);
     publishedBookService.deletePublishedBookById(publishedBookId);
     return ResponseEntity.noContent().build();

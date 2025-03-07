@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.sensilabs.praktyki.entities.BookCategory;
 import pl.sensilabs.praktyki.requests.BookCategoryRequest;
 import pl.sensilabs.praktyki.responses.BookCategoryResponse;
 import pl.sensilabs.praktyki.services.BookCategoryService;
@@ -16,31 +15,28 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/category")
-public class BookCategoryController {
+class BookCategoryController {
 
     private final BookCategoryService bookCategoryService;
 
     @GetMapping
-        public ResponseEntity<List<BookCategoryResponse>> getTypes(){
+    ResponseEntity<List<BookCategoryResponse>> getTypes(){
         var response =  bookCategoryService.getTypes();
         log.info("Recived  book category response: {}", response);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/add")
-        public ResponseEntity<BookCategoryResponse> addBookCategory(@Valid @RequestBody BookCategoryRequest bookCategoryRequest) {
+    ResponseEntity<BookCategoryResponse> addBookCategory(@Valid @RequestBody BookCategoryRequest bookCategoryRequest) {
         var response = bookCategoryService.addBookCategory(bookCategoryRequest);
         log.info("Added BookCategory");
         return ResponseEntity.ok(response);
-
     }
 
     @DeleteMapping("{category_id}")
-        public  ResponseEntity<Void> deleteBookCategory(@PathVariable("category_id") int categoryId){
+    ResponseEntity<Void> deleteBookCategory(@PathVariable("category_id") int categoryId){
         bookCategoryService.deleteById(categoryId);
         log.info("Deleted category with id {}", categoryId);
         return ResponseEntity.noContent().build();
     }
-
-
 }
