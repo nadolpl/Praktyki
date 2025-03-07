@@ -16,6 +16,7 @@ public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "author_id")
     private UUID id;
 
     private String firstName;
