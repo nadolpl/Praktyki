@@ -20,7 +20,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "order")
+@Table(name = "orders")
 class Order {
 
   @Id
