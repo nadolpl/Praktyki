@@ -31,7 +31,7 @@ public class BookOrder {
   Integer quantity;
 
   @ManyToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "book_id")
+  @JoinColumn(name = "book_id", insertable = false, updatable = false)
   Book book;
 
   public BookOrder(UUID bookId, UUID orderId, Integer quantity) {

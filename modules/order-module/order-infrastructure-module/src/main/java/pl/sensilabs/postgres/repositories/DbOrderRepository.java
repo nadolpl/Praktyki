@@ -44,8 +44,8 @@ public class DbOrderRepository implements OrderRepository {
     var entity = new OrderEntity();
     entity.setFinalPrice(order.getFinalPrice());
     entity.setOrderStatus(order.getOrderStatus().toString());
-    jpaOrderRepository.save(entity);
-    return order;
+    var newId = jpaOrderRepository.save(entity).getOrderId();
+    return new Order(newId, order.getBasket(), order.getFinalPrice(), order.getOrderStatus());
   }
 
   @Override
@@ -56,7 +56,7 @@ public class DbOrderRepository implements OrderRepository {
       o.setOrderStatus(order.getOrderStatus().toString());
 
       order.getBasket().getOrderItems().forEach(oi -> {
-        if(!jpaBookOrderRepository
+        if (!jpaBookOrderRepository
             .existsByOrderIdAndBookId(order.getOrderId(), oi.getBookId())) {
           jpaBookOrderRepository.save(
               new BookOrder(oi.getBookId(), order.getOrderId(), oi.getQuantity()));

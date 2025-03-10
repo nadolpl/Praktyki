@@ -16,8 +16,10 @@ public class BookAuthor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer bookAuthorId;
 
+    @Column(name = "author_id")
     private UUID authorId;
 
+    @Column(name = "book_id")
     private UUID bookId;
 
     BookAuthor(UUID authorId, UUID bookId) {
