@@ -12,21 +12,15 @@
   <groupId>pl.sensilabs</groupId>
   <artifactId>Praktyki</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
   <name>Praktyki</name>
   <description>Praktyki</description>
-  <url/>
-  <licenses>
-    <license/>
-  </licenses>
-  <developers>
-    <developer/>
-  </developers>
-  <scm>
-    <connection/>
-    <developerConnection/>
-    <tag/>
-    <url/>
-  </scm>
+  <modules>
+    <module>system</module>
+    <module>modules</module>
+    <module>modules/order-module/order-domain-module</module>
+  </modules>
+
   <properties>
     <java.version>23</java.version>
   </properties>
@@ -53,17 +47,6 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
-      <version>5.4.0</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
