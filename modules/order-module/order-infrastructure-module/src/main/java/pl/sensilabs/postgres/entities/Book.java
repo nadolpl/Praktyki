@@ -20,7 +20,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "book")
-public class Book {
+class Book {
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
@@ -32,7 +32,7 @@ public class Book {
   @ManyToMany(mappedBy = "books", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
   private Set<Author> authors;
 
-  public Book(String bookTitle, Integer pages) {
+  Book(String bookTitle, Integer pages) {
     this.bookTitle = bookTitle;
     this.pages = pages;
   }
