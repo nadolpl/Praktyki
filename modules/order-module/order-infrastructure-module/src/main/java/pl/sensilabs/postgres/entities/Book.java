@@ -20,7 +20,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "book")
-class Book {
+public class Book {
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)

@@ -5,11 +5,11 @@ import java.util.UUID;
 
 public interface OrderRepository {
 
-  Optional<Order> findOrderById(UUID orderId);
+  Optional<OrderAggregate> findOrderById(UUID orderId);
 
-  Order saveOrder(Order order);
+  OrderAggregate saveOrder(OrderAggregate order);
 
-  void updateOrder(Order order);
+  void updateOrder(OrderAggregate order);
 
   void deleteOrder(UUID orderId);
 }

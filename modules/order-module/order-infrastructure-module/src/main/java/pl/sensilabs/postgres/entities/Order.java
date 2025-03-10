@@ -21,7 +21,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "orders")
-class Order {
+public class Order {
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)

@@ -10,7 +10,7 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor
 @Table(name = "book_author")
-class BookAuthor {
+public class BookAuthor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

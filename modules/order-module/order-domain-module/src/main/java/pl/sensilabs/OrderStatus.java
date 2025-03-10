@@ -3,7 +3,7 @@ package pl.sensilabs;
 import lombok.Getter;
 
 @Getter
-enum OrderStatus {
+public enum OrderStatus {
   CONFIRMED,          //utworzono
   PROCESSING,        //w trakcie
   AWAITING_PAYMENT, //oczekuje na zapłatę

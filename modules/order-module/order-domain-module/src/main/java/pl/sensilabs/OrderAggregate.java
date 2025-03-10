@@ -2,25 +2,26 @@ package pl.sensilabs;
 
 import java.math.BigDecimal;
 import java.util.UUID;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import pl.sensilabs.exceptions.InvalidOrderStateException;
 
-@Getter
-public class Order {
+@Getter //możliwie nie potrzebne i wystarczył by getter dla ID ale zobaczymy
+@AllArgsConstructor //do mapowania z encji
+public class OrderAggregate {
   private UUID orderId;
   private final OrderBasket basket;
   private BigDecimal finalPrice;
   private OrderStatus orderStatus;
 
-  public Order() {
+  public OrderAggregate() {
     basket = new OrderBasket();
     finalPrice = BigDecimal.ZERO;
     orderStatus = OrderStatus.CONFIRMED;
   }
 
   public void addBookToBasket(OrderItem item) {
-    if(OrderStatus.CONFIRMED != orderStatus) {
-      return; //throw new super fajne exception :D
-    }
+    validateState(OrderStatus.CONFIRMED, "Cannot add products to order once its finished.");
 
     basket.addOrderItem(item);
     finalPrice = basket.recalculateFinalPrice();
@@ -28,32 +29,26 @@ public class Order {
   }
 
   public void finishOrder() {
-    if(OrderStatus.PROCESSING != orderStatus) {
-      return; //exception na potem
-    }
+   validateState(OrderStatus.PROCESSING, "Cannot finish empty order.");
 
     orderStatus = OrderStatus.AWAITING_PAYMENT;
   }
 
   public void payForOrder() {
-    if(OrderStatus.AWAITING_PAYMENT != orderStatus) {
-      return; //excepton <3
-    }
+    validateState(OrderStatus.AWAITING_PAYMENT, "Cannot pay for unfinished order.");
 
     orderStatus = OrderStatus.PAID;
   }
 
   public void shipOrder() {
-    if(OrderStatus.PAID != orderStatus) {
-      return; //POMocy
-    }
+    validateState(OrderStatus.PAID, "Cannot ship order until its paid.");
 
     orderStatus = OrderStatus.SHIPPED;
   }
 
   public void cancelOrder() {
     if(!canCancelOrder()) {
-      return; //rzucamy wyjątkami chłopaki
+      throw new  InvalidOrderStateException("Cannot cancel order awaiting for payment.");
     }
 
     orderStatus = OrderStatus.CANCELED;
@@ -63,5 +58,11 @@ public class Order {
     return orderStatus == OrderStatus.CONFIRMED
         ||  orderStatus == OrderStatus.PROCESSING
         ||  orderStatus == OrderStatus.AWAITING_PAYMENT;
+  }
+
+  private void validateState(OrderStatus expectedStatus, String exceptionMessage) {
+    if(orderStatus != expectedStatus) {
+      throw new InvalidOrderStateException(exceptionMessage);
+    }
   }
 }
