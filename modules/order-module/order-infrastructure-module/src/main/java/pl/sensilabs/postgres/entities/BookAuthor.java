@@ -15,9 +15,9 @@ class BookAuthor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer bookAuthorId;
-    @Column(name = "author_id", nullable = false)
+
     private UUID authorId;
-    @Column(name = "book_id", nullable = false)
+
     private UUID bookId;
 
     BookAuthor(UUID authorId, UUID bookId) {
