@@ -14,6 +14,7 @@
   <modules>
     <module>order-rest-module</module>
     <module>order-infrastructure-module</module>
+    <module>order-domain-module</module>
   </modules>
 
   <properties>
