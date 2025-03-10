@@ -1,4 +1,4 @@
-package pl.sensilabs.praktyki.entities;
+package pl.sensilabs.postgres.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
