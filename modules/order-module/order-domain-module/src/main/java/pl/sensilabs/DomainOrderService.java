@@ -28,21 +28,27 @@ class DomainOrderService implements OrderService {
     var bookPrice = bookPriceFetcher.fetch(bookId).toString();
     var orderItem = new OrderItem(bookId, quantity, bookPrice);
     order.addBookToBasket(orderItem);
-
+    orderRepository.saveOrder(order);
   }
 
   @Override
   public void payForOrder(UUID orderId) {
-
+    var order = getOrderById(orderId);
+    order.payForOrder();
+    orderRepository.saveOrder(order);
   }
 
   @Override
   public void shipOrder(UUID orderId) {
-
+    var order = getOrderById(orderId);
+    order.shipOrder();
+    orderRepository.saveOrder(order);
   }
 
   @Override
   public void cancelOrder(UUID orderId) {
-
+    var order = getOrderById(orderId);
+    order.cancelOrder();
+    orderRepository.saveOrder(order);
   }
 }

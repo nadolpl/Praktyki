@@ -3,7 +3,7 @@ package pl.sensilabs;
 import java.util.Optional;
 import java.util.UUID;
 
-interface OrderRepository {
+public interface OrderRepository {
 
   Optional<Order> findOrderById(UUID orderId);
 
