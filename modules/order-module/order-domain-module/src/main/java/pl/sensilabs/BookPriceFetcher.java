@@ -5,5 +5,5 @@ import java.util.UUID;
 
 public interface BookPriceFetcher {
 
-  BigDecimal fetch(UUID orderId);
+  BigDecimal fetch(UUID bookId);
 }

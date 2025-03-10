@@ -4,28 +4,28 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
-import pl.sensilabs.OrderAggregate;
+import pl.sensilabs.Order;
 import pl.sensilabs.OrderRepository;
 
 public class MockOrderRepository implements OrderRepository {
 
-  Map<UUID, OrderAggregate> orders = new HashMap<>();
+  Map<UUID, Order> orders = new HashMap<>();
 
   @Override
-  public Optional<OrderAggregate> findOrderById(UUID orderId) {
+  public Optional<Order> findOrderById(UUID orderId) {
     return Optional.ofNullable(orders.get(orderId));
   }
 
   @Override
-  public OrderAggregate saveOrder(OrderAggregate order) {
-    var newOrder = new OrderAggregate(
+  public Order saveOrder(Order order) {
+    var newOrder = new Order(
         UUID.randomUUID(), order.getBasket(), order.getFinalPrice(), order.getOrderStatus());
     orders.put(newOrder.getOrderId(), newOrder);
     return newOrder;
   }
 
   @Override
-  public void updateOrder(OrderAggregate order) {
+  public void updateOrder(Order order) {
     if (orders.containsKey(order.getOrderId())) {
       orders.put(order.getOrderId(), order);
     }

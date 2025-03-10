@@ -2,12 +2,15 @@ package pl.sensilabs.postgres.entities;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import java.util.Set;
@@ -21,22 +24,19 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "orders")
-public class Order {
+public class OrderEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   UUID orderId;
-  BigDecimal price;
+  BigDecimal finalPrice;
   String orderStatus;
 
-  @ManyToMany(cascade = CascadeType.PERSIST)
-  @JoinTable(name = "book_order",
-      joinColumns = @JoinColumn(name = "order_id"),
-      inverseJoinColumns = @JoinColumn(name = "book_id"))
-  Set<Book> orderedBooks;
+  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  Set<BookOrder> bookOrders;
 
-  public Order(BigDecimal price, String orderStatus) {
-    this.price = price;
+  public OrderEntity(BigDecimal finalPrice, String orderStatus) {
+    this.finalPrice = finalPrice;
     this.orderStatus = orderStatus;
   }
 }

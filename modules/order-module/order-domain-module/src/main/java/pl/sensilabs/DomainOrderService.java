@@ -13,12 +13,12 @@ public class DomainOrderService implements OrderService {
   private final BookPriceFetcher bookPriceFetcher;
 
   @Override
-  public OrderAggregate createOrder() {
-    return orderRepository.saveOrder(new OrderAggregate());
+  public Order createOrder() {
+    return orderRepository.saveOrder(new Order());
   }
 
   @Override
-  public OrderAggregate getOrderById(UUID orderId) {
+  public Order getOrderById(UUID orderId) {
     return orderRepository.findOrderById(orderId)
         .orElseThrow(() -> new OrderNotFoundException(orderId));
   }

@@ -4,13 +4,19 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+import lombok.Getter;
 
+@Getter
 public class OrderBasket {
 
   private final Set<OrderItem> orderItems;
 
   public OrderBasket() {
     this.orderItems = new HashSet<>();
+  }
+
+  public OrderBasket(Set<OrderItem> orderItems) {
+    this.orderItems = orderItems;
   }
 
   public void addOrderItem(OrderItem orderItem) {

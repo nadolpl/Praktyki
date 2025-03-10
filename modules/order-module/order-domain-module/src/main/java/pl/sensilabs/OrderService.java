@@ -4,9 +4,9 @@ import java.util.UUID;
 
 public interface OrderService {
 
-  OrderAggregate createOrder();
+  Order createOrder();
 
-  OrderAggregate getOrderById(UUID orderId);
+  Order getOrderById(UUID orderId);
 
   void addBookToOrder(UUID orderId, UUID bookId, int quantity);
 

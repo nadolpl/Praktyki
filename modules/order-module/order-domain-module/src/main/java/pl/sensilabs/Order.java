@@ -8,13 +8,13 @@ import pl.sensilabs.exceptions.InvalidOrderStateException;
 
 @Getter //możliwie nie potrzebne i wystarczył by getter dla ID ale zobaczymy
 @AllArgsConstructor //do mapowania z encji
-public class OrderAggregate {
+public class Order {
   private UUID orderId;
   private final OrderBasket basket;
   private BigDecimal finalPrice;
   private OrderStatus orderStatus;
 
-  public OrderAggregate() {
+  public Order() {
     basket = new OrderBasket();
     finalPrice = BigDecimal.ZERO;
     orderStatus = OrderStatus.CONFIRMED;
