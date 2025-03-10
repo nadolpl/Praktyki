@@ -2,10 +2,11 @@ package pl.sensilabs.postgres.entities;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
@@ -15,25 +16,27 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Entity
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
-@Entity
-@Table(name = "book")
-public class Book {
+@Table(name = "orders")
+class Order {
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
-  private UUID bookId;
-  private String bookTitle;
-  private Integer pages;
-  private BigDecimal price;
+  UUID orderId;
+  BigDecimal price;
+  String orderStatus;
 
-  @ManyToMany(mappedBy = "books", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-  private Set<Author> authors;
+  @ManyToMany(cascade = CascadeType.PERSIST)
+  @JoinTable(name = "book_order",
+      joinColumns = @JoinColumn(name = "order_id"),
+      inverseJoinColumns = @JoinColumn(name = "book_id"))
+  Set<Book> orderedBooks;
 
-  public Book(String bookTitle, Integer pages) {
-    this.bookTitle = bookTitle;
-    this.pages = pages;
+  public Order(BigDecimal price, String orderStatus) {
+    this.price = price;
+    this.orderStatus = orderStatus;
   }
 }
