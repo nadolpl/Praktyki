@@ -19,7 +19,7 @@ public class OrderController {
 
   @GetMapping("/create")
   public ResponseEntity<UUID> createOrder() {
-    var orderId = orderService.createOrder().getOrderId();
+    var orderId = orderService.createOrder();
     return ResponseEntity.ok(orderId);
   }
 }
