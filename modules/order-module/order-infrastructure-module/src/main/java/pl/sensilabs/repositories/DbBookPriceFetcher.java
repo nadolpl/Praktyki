@@ -1,4 +1,4 @@
-package pl.sensilabs.postgres.repositories;
+package pl.sensilabs.repositories;
 
 import java.math.BigDecimal;
 import java.util.UUID;

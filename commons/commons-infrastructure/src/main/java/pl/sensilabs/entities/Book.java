@@ -1,4 +1,4 @@
-package pl.sensilabs.postgres.entities;
+package pl.sensilabs.entities;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;

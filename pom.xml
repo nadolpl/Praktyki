@@ -19,6 +19,7 @@
   <modules>
     <module>system</module>
     <module>modules</module>
+    <module>commons</module>
   </modules>
 
   <properties>

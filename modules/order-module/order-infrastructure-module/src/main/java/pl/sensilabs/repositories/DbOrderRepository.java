@@ -1,4 +1,4 @@
-package pl.sensilabs.postgres.repositories;
+package pl.sensilabs.repositories;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -12,8 +12,8 @@ import pl.sensilabs.OrderBasket;
 import pl.sensilabs.OrderItem;
 import pl.sensilabs.OrderRepository;
 import pl.sensilabs.OrderStatus;
-import pl.sensilabs.postgres.entities.BookOrder;
-import pl.sensilabs.postgres.entities.OrderEntity;
+import pl.sensilabs.entities.BookOrder;
+import pl.sensilabs.entities.OrderEntity;
 
 @Repository
 @RequiredArgsConstructor
@@ -70,3 +70,7 @@ public class DbOrderRepository implements OrderRepository {
     jpaOrderRepository.deleteById(orderId);
   }
 }
+
+//TODO pozmieniać nazwy w bazie danych i dodać ceny do książek
+//TODO dodać więcej możliwości w kontrollerze i DTO z mapperami
+//TODO może kontroller który w body przyjmuje polecenia będzie ciekawy :')
