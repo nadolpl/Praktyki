@@ -18,7 +18,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "book_order")
+@Table(name = "books_orders")
 public class BookOrder {
 
   @Id
@@ -26,12 +26,17 @@ public class BookOrder {
   UUID bookOrderId;
   @Column(name = "book_id")
   UUID bookId;
+  @Column(name = "order_id")
   UUID orderId;
   Integer quantity;
 
   @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "book_id", insertable = false, updatable = false)
   Book book;
+
+  @ManyToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "order_id", insertable = false, updatable = false)
+  OrderEntity order;
 
   public BookOrder(UUID bookId, UUID orderId, Integer quantity) {
     this.bookId = bookId;

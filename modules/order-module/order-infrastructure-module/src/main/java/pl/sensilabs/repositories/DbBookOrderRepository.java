@@ -19,7 +19,12 @@ public class DbBookOrderRepository implements BookOrderRepository {
 
   @Override
   public void addBookOrder(UUID orderId, UUID bookId, int quantity) {
-    jpaBookOrderRepository.save(new BookOrder(orderId, bookId, quantity));
+    if (jpaBookOrderRepository.existsByOrderIdAndBookId(orderId, bookId)) {
+      var bookOrder = jpaBookOrderRepository.findByOrderIdAndBookId(orderId, bookId);
+      bookOrder.setQuantity(bookOrder.getQuantity() + quantity);
+    } else {
+      jpaBookOrderRepository.save(new BookOrder(bookId, orderId, quantity));
+    }
   }
 
   @Override

@@ -7,6 +7,7 @@ import pl.sensilabs.exceptions.InvalidOrderStateException;
 
 @Getter
 public class Order {
+
   private UUID orderId;
   private final OrderBasket basket;
   private BigDecimal finalPrice;
@@ -26,15 +27,21 @@ public class Order {
   }
 
   public void addBookToBasket(OrderItem item) {
-    validateState(OrderStatus.CONFIRMED, "Cannot add products to order once its finished.");
+    if (!canAddProductToOrder()) {
+      throw new InvalidOrderStateException("Order has already been finished and ready for payment");
+    }
 
     basket.addOrderItem(item);
     finalPrice = basket.recalculateFinalPrice();
     orderStatus = OrderStatus.PROCESSING;
   }
 
+  private boolean canAddProductToOrder() {
+    return orderStatus == OrderStatus.CONFIRMED || orderStatus == OrderStatus.PROCESSING;
+  }
+
   public void finishOrder() {
-   validateState(OrderStatus.PROCESSING, "Cannot finish empty order.");
+    validateState(OrderStatus.PROCESSING, "Cannot finish empty order.");
 
     orderStatus = OrderStatus.AWAITING_PAYMENT;
   }
@@ -52,8 +59,8 @@ public class Order {
   }
 
   public void cancelOrder() {
-    if(!canCancelOrder()) {
-      throw new  InvalidOrderStateException("Cannot cancel order awaiting for payment.");
+    if (!canCancelOrder()) {
+      throw new InvalidOrderStateException("Cannot cancel order awaiting for payment.");
     }
 
     orderStatus = OrderStatus.CANCELED;
@@ -61,12 +68,12 @@ public class Order {
 
   private boolean canCancelOrder() {
     return orderStatus == OrderStatus.CONFIRMED
-        ||  orderStatus == OrderStatus.PROCESSING
-        ||  orderStatus == OrderStatus.AWAITING_PAYMENT;
+        || orderStatus == OrderStatus.PROCESSING
+        || orderStatus == OrderStatus.AWAITING_PAYMENT;
   }
 
   private void validateState(OrderStatus expectedStatus, String exceptionMessage) {
-    if(orderStatus != expectedStatus) {
+    if (orderStatus != expectedStatus) {
       throw new InvalidOrderStateException(exceptionMessage);
     }
   }

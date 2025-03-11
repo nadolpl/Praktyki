@@ -1,8 +1,6 @@
 package pl.sensilabs.entities;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,7 +26,7 @@ public class OrderEntity {
   BigDecimal finalPrice;
   String orderStatus;
 
-  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "order")
   Set<BookOrder> bookOrders;
 
   public OrderEntity(BigDecimal finalPrice, String orderStatus) {
