@@ -12,6 +12,8 @@ public interface OrderService {
 
   void finishOrder(UUID orderId);
 
+  void continueOrder(UUID orderId);
+
   void payForOrder(UUID orderId); //mega udawanka
 
   void shipOrder(UUID  orderId);

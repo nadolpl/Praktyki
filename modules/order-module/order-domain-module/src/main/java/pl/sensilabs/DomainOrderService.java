@@ -42,6 +42,13 @@ public class DomainOrderService implements OrderService {
   }
 
   @Override
+  public void continueOrder(UUID orderId) {
+    var order = getOrderById(orderId);
+    order.continueOrder();
+    orderRepository.updateOrder(order);
+  }
+
+  @Override
   public void payForOrder(UUID orderId) {
     var order = getOrderById(orderId);
     order.payForOrder();
@@ -58,7 +65,14 @@ public class DomainOrderService implements OrderService {
   @Override
   public void cancelOrder(UUID orderId) {
     var order = getOrderById(orderId);
+    if (order.getOrderStatus() == OrderStatus.PAID) {
+      refundPayment();
+    }
     order.cancelOrder();
     orderRepository.updateOrder(order);
+  }
+
+  void refundPayment() {
+    //tak dla sportu
   }
 }

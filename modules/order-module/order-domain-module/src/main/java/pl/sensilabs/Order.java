@@ -46,6 +46,13 @@ public class Order {
     orderStatus = OrderStatus.AWAITING_PAYMENT;
   }
 
+  public void continueOrder() {
+    validateState(
+        OrderStatus.AWAITING_PAYMENT, "Cannot continue order that is unfinished, paid or shipped.");
+
+    orderStatus = OrderStatus.PROCESSING;
+  }
+
   public void payForOrder() {
     validateState(OrderStatus.AWAITING_PAYMENT, "Cannot pay for unfinished order.");
 
@@ -69,7 +76,8 @@ public class Order {
   private boolean canCancelOrder() {
     return orderStatus == OrderStatus.CONFIRMED
         || orderStatus == OrderStatus.PROCESSING
-        || orderStatus == OrderStatus.AWAITING_PAYMENT;
+        || orderStatus == OrderStatus.AWAITING_PAYMENT
+        || orderStatus == OrderStatus.SHIPPED;
   }
 
   private void validateState(OrderStatus expectedStatus, String exceptionMessage) {

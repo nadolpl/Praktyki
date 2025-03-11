@@ -1,4 +1,4 @@
-package pl.sensilabs.exceptionHandlers;
+package pl.sensilabs.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;

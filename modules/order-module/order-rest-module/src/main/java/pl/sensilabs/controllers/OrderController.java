@@ -23,16 +23,16 @@ public class OrderController {
 
   private final OrderService orderService;
 
-  @GetMapping("/create")
-  public ResponseEntity<UUID> createOrder() {
-    var orderId = orderService.createOrder();
-    return ResponseEntity.ok(orderId);
-  }
-
   @GetMapping("/{orderId}")
   public ResponseEntity<OrderDetailsResponse> getOrderDetails(@PathVariable UUID orderId) {
     var order = orderService.getOrderById(orderId);
     return ResponseEntity.ok(OrderMapper.toOrderDetailsResponse(order));
+  }
+
+  @PostMapping("/create")
+  public ResponseEntity<UUID> createOrder() {
+    var orderId = orderService.createOrder();
+    return ResponseEntity.ok(orderId);
   }
 
   @PostMapping("/{orderId}/add")
@@ -40,6 +40,33 @@ public class OrderController {
       @PathVariable UUID orderId,
       @RequestBody BookAddRequest bookAddRequest) {
     orderService.addBookToOrder(orderId, bookAddRequest.bookId(), bookAddRequest.quantity());
+    return ResponseEntity.accepted().build();
+  }
+
+  @PostMapping("/{orderId}/finish")
+  public ResponseEntity<Void> finishOrder(@PathVariable UUID orderId) {
+    orderService.finishOrder(orderId);
+    return ResponseEntity.accepted().build();
+  }
+
+  @PostMapping("/{orderId}/continue")
+  public ResponseEntity<Void> continueOrder(@PathVariable UUID orderId) {
+    orderService.continueOrder(orderId);
+    return ResponseEntity.accepted().build();
+  }
+
+  //myślałem nad utworzeniem mikro-serwisu do zarządzania płatnościami,
+  //ale nie chcę aż tak daleko wychodzić z materiałem.
+  @PostMapping("/{orderId}/pay")
+  public ResponseEntity<Void> payForOrder(@PathVariable UUID orderId) {
+    orderService.payForOrder(orderId);
+    orderService.shipOrder(orderId);
+    return ResponseEntity.accepted().build();
+  }
+
+  @PostMapping("/{orderId}/cancel")
+  public ResponseEntity<Void> cancelOrder(@PathVariable UUID orderId) {
+    orderService.cancelOrder(orderId);
     return ResponseEntity.accepted().build();
   }
 }
