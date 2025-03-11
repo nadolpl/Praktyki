@@ -2,12 +2,10 @@ package pl.sensilabs;
 
 import java.math.BigDecimal;
 import java.util.UUID;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import pl.sensilabs.exceptions.InvalidOrderStateException;
 
-@Getter //możliwie nie potrzebne i wystarczył by getter dla ID ale zobaczymy
-@AllArgsConstructor //do mapowania z encji
+@Getter
 public class Order {
   private UUID orderId;
   private final OrderBasket basket;
@@ -18,6 +16,13 @@ public class Order {
     basket = new OrderBasket();
     finalPrice = BigDecimal.ZERO;
     orderStatus = OrderStatus.CONFIRMED;
+  }
+
+  public Order(UUID orderId, OrderBasket basket, OrderStatus orderStatus) {
+    this.orderId = orderId;
+    this.basket = basket;
+    this.finalPrice = basket.recalculateFinalPrice();
+    this.orderStatus = orderStatus;
   }
 
   public void addBookToBasket(OrderItem item) {

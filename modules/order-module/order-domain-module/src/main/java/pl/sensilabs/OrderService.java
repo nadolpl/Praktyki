@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public interface OrderService {
 
-  Order createOrder();
+  UUID createOrder();
 
   Order getOrderById(UUID orderId);
 

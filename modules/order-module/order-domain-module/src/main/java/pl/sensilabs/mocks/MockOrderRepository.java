@@ -17,11 +17,11 @@ public class MockOrderRepository implements OrderRepository {
   }
 
   @Override
-  public Order saveOrder(Order order) {
+  public UUID saveOrder(Order order) {
     var newOrder = new Order(
-        UUID.randomUUID(), order.getBasket(), order.getFinalPrice(), order.getOrderStatus());
+        UUID.randomUUID(), order.getBasket(), order.getOrderStatus());
     orders.put(newOrder.getOrderId(), newOrder);
-    return newOrder;
+    return newOrder.getOrderId();
   }
 
   @Override

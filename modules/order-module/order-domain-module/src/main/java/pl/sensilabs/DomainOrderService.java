@@ -10,10 +10,11 @@ import pl.sensilabs.exceptions.OrderNotFoundException;
 public class DomainOrderService implements OrderService {
 
   private final OrderRepository orderRepository;
+  private final BookOrderRepository bookOrderRepository;
   private final BookPriceFetcher bookPriceFetcher;
 
   @Override
-  public Order createOrder() {
+  public UUID createOrder() {
     return orderRepository.saveOrder(new Order());
   }
 
@@ -29,6 +30,7 @@ public class DomainOrderService implements OrderService {
     var bookPrice = bookPriceFetcher.fetch(bookId).toString();
     var orderItem = new OrderItem(bookId, quantity, bookPrice);
     order.addBookToBasket(orderItem);
+    bookOrderRepository.addBookOrder(orderId, bookId, quantity);
     orderRepository.updateOrder(order);
   }
 

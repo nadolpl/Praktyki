@@ -2,17 +2,14 @@ package pl.sensilabs.repositories;
 
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import pl.sensilabs.BookPriceFetcher;
+import pl.sensilabs.BookOrderRepository;
 import pl.sensilabs.Order;
 import pl.sensilabs.OrderBasket;
-import pl.sensilabs.OrderItem;
 import pl.sensilabs.OrderRepository;
 import pl.sensilabs.OrderStatus;
-import pl.sensilabs.entities.BookOrder;
 import pl.sensilabs.entities.OrderEntity;
 
 @Repository
@@ -20,32 +17,23 @@ import pl.sensilabs.entities.OrderEntity;
 public class DbOrderRepository implements OrderRepository {
 
   private final JpaOrderRepository jpaOrderRepository;
-  private final JpaBookOrderRepository jpaBookOrderRepository;
-  private final BookPriceFetcher bookPriceFetcher;
+  private final BookOrderRepository bookOrderRepository;
 
   @Override
   public Optional<Order> findOrderById(UUID orderId) {
-
     return jpaOrderRepository.findById(orderId).map(o -> {
-      var orderBasket = new OrderBasket(
-          jpaBookOrderRepository.findAllByOrderId(orderId)
-              .stream().map(bookOrder -> new OrderItem(
-                  bookOrder.getBookId(),
-                  bookOrder.getQuantity(),
-                  bookPriceFetcher.fetch(bookOrder.getBookId()).toString()
-              )).collect(Collectors.toSet()));
+      var orderBasket = new OrderBasket(bookOrderRepository.getOrderBasket(orderId));
       return new Order(
-          orderId, orderBasket, o.getFinalPrice(), OrderStatus.valueOf(o.getOrderStatus()));
+          orderId, orderBasket, OrderStatus.valueOf(o.getOrderStatus()));
     });
   }
 
   @Override
-  public Order saveOrder(Order order) {
+  public UUID saveOrder(Order order) {
     var entity = new OrderEntity();
     entity.setFinalPrice(order.getFinalPrice());
     entity.setOrderStatus(order.getOrderStatus().toString());
-    var newId = jpaOrderRepository.save(entity).getOrderId();
-    return new Order(newId, order.getBasket(), order.getFinalPrice(), order.getOrderStatus());
+    return jpaOrderRepository.save(entity).getOrderId();
   }
 
   @Override
@@ -54,14 +42,6 @@ public class DbOrderRepository implements OrderRepository {
     jpaOrderRepository.findById(order.getOrderId()).ifPresent(o -> {
       o.setFinalPrice(order.getFinalPrice());
       o.setOrderStatus(order.getOrderStatus().toString());
-
-      order.getBasket().getOrderItems().forEach(oi -> {
-        if (!jpaBookOrderRepository
-            .existsByOrderIdAndBookId(order.getOrderId(), oi.getBookId())) {
-          jpaBookOrderRepository.save(
-              new BookOrder(oi.getBookId(), order.getOrderId(), oi.getQuantity()));
-        }
-      });
     });
   }
 
